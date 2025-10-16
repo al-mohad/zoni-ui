@@ -1,0 +1,170 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+          channel: 'stable'
+          
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+        
+      - name: Analyze project source
+        run: dart analyze --fatal-infos
+        
+      - name: Check for outdated dependencies
+        run: flutter pub outdated --exit-code
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+          channel: 'stable'
+          
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Run unit tests
+        run: flutter test --coverage
+        
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: coverage/lcov.info
+          fail_ci_if_error: true
+
+  golden_test:
+    name: Golden Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+          channel: 'stable'
+          
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Run golden tests
+        run: flutter test test/golden/
+        
+      - name: Upload golden test failures
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: golden-test-failures
+          path: test/goldens/failures/
+
+  build_example:
+    name: Build Example
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+          channel: 'stable'
+          
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Get example dependencies
+        working-directory: example
+        run: flutter pub get
+        
+      - name: Build example app
+        working-directory: example
+        run: flutter build apk --debug
+
+  build_widgetbook:
+    name: Build Widgetbook
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+          channel: 'stable'
+          
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Get widgetbook dependencies
+        working-directory: widgetbook
+        run: flutter pub get
+        
+      - name: Generate widgetbook files
+        working-directory: widgetbook
+        run: dart run build_runner build
+        
+      - name: Build widgetbook
+        working-directory: widgetbook
+        run: flutter build web
+        
+      - name: Upload widgetbook build
+        uses: actions/upload-artifact@v3
+        with:
+          name: widgetbook-build
+          path: widgetbook/build/web/
+
+  package_score:
+    name: Package Score
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.0'
+          channel: 'stable'
+          
+      - name: Install pana
+        run: dart pub global activate pana
+        
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Analyze package
+        run: dart pub global run pana --exit-code-threshold 0
