@@ -28,6 +28,18 @@ enum ZoniButtonVariant {
 
   /// Filled tonal button with tinted background
   filledTonal,
+
+  /// Primary button variant
+  primary,
+
+  /// Success button variant
+  success,
+
+  /// Warning button variant
+  warning,
+
+  /// Danger/Error button variant
+  danger,
 }
 
 /// A customizable button widget following the Zoni design system.
@@ -63,6 +75,19 @@ class ZoniButton extends StatelessWidget {
     this.semanticLabel,
     this.tooltip,
   });
+
+  /// Creates a text button variant.
+  const ZoniButton.text({
+    required this.onPressed,
+    required this.child,
+    super.key,
+    this.size = ZoniButtonSize.medium,
+    this.width,
+    this.isLoading = false,
+    this.icon,
+    this.semanticLabel,
+    this.tooltip,
+  }) : variant = ZoniButtonVariant.text;
 
   /// Called when the button is tapped.
   ///
@@ -229,6 +254,30 @@ class ZoniButton extends StatelessWidget {
         );
       case ZoniButtonVariant.filledTonal:
         return FilledButton(
+          onPressed: effectiveOnPressed,
+          style: style,
+          child: child,
+        );
+      case ZoniButtonVariant.primary:
+        return ElevatedButton(
+          onPressed: effectiveOnPressed,
+          style: style,
+          child: child,
+        );
+      case ZoniButtonVariant.success:
+        return ElevatedButton(
+          onPressed: effectiveOnPressed,
+          style: style,
+          child: child,
+        );
+      case ZoniButtonVariant.warning:
+        return ElevatedButton(
+          onPressed: effectiveOnPressed,
+          style: style,
+          child: child,
+        );
+      case ZoniButtonVariant.danger:
+        return ElevatedButton(
           onPressed: effectiveOnPressed,
           style: style,
           child: child,

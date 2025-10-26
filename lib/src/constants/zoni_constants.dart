@@ -60,6 +60,9 @@ class ZoniElevation {
   /// No elevation: 0
   static const double none = 0;
 
+  /// Extra small elevation: 0.5
+  static const double xs = 0.5;
+
   /// Small elevation: 1
   static const double sm = 1;
 

@@ -29,6 +29,15 @@ class ExampleHomePage extends StatefulWidget {
 class _ExampleHomePageState extends State<ExampleHomePage> {
   bool _isDarkMode = false;
   bool _isLoading = false;
+  bool _checkboxValue = false;
+  bool _switchValue = false;
+  String _radioValue = 'option1';
+  double _sliderValue = 0.5;
+  RangeValues _rangeValues = const RangeValues(0.2, 0.8);
+  String? _dropdownValue;
+  final int _currentTabIndex = 0;
+  int _currentPage = 1;
+  final int _totalPages = 10;
   final TextEditingController _textController = TextEditingController();
 
   @override
@@ -92,6 +101,21 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                 _buildSection(
                   'Colors',
                   _buildColorExamples(),
+                ),
+                SizedBox(height: ZoniUI.spacing.xl),
+                _buildSection(
+                  'New Components',
+                  _buildNewComponentsExamples(),
+                ),
+                SizedBox(height: ZoniUI.spacing.xl),
+                _buildSection(
+                  'Additional Components',
+                  _buildAdditionalComponentsExamples(),
+                ),
+                SizedBox(height: ZoniUI.spacing.xl),
+                _buildSection(
+                  'Latest Components',
+                  _buildLatestComponentsExamples(),
                 ),
               ],
             ),
@@ -382,6 +406,81 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
         ],
       );
 
+  Widget _buildNewComponentsExamples() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Text('ZoniText Components'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ZoniText.displayLarge('Display Large'),
+              ZoniText.headlineMedium('Headline Medium'),
+              ZoniText.titleLarge('Title Large'),
+              ZoniText.bodyMedium('Body Medium'),
+              ZoniText.labelSmall('Label Small'),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.md),
+          const Text('ZoniContainer Components'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Row(
+            children: <Widget>[
+              const Expanded(
+                child: ZoniContainer.card(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Card Container'),
+                  ),
+                ),
+              ),
+              SizedBox(width: ZoniUI.spacing.md),
+              const Expanded(
+                child: ZoniContainer.surface(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Surface Container'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.md),
+          const Text('Feedback Components'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Wrap(
+            spacing: ZoniUI.spacing.sm,
+            runSpacing: ZoniUI.spacing.sm,
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: () => _showZoniSnackBar('success'),
+                child: const Text('Success SnackBar'),
+              ),
+              ElevatedButton(
+                onPressed: () => _showZoniSnackBar('error'),
+                child: const Text('Error SnackBar'),
+              ),
+              ElevatedButton(
+                onPressed: () => _showZoniSnackBar('warning'),
+                child: const Text('Warning SnackBar'),
+              ),
+              ElevatedButton(
+                onPressed: () => _showZoniSnackBar('info'),
+                child: const Text('Info SnackBar'),
+              ),
+              ElevatedButton(
+                onPressed: () => _showZoniDialog(),
+                child: const Text('Confirmation Dialog'),
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.md),
+          const Text('Form Components'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          _buildFormComponentsExample(),
+        ],
+      );
+
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
@@ -393,6 +492,430 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
       _isLoading = !_isLoading;
     });
   }
+
+  void _showZoniSnackBar(String type) {
+    late ZoniSnackBar snackBar;
+    switch (type) {
+      case 'success':
+        snackBar =
+            ZoniSnackBar.success(message: 'Success! Operation completed.');
+        break;
+      case 'error':
+        snackBar = ZoniSnackBar.error(message: 'Error! Something went wrong.');
+        break;
+      case 'warning':
+        snackBar =
+            ZoniSnackBar.warning(message: 'Warning! Please check your input.');
+        break;
+      case 'info':
+        snackBar = ZoniSnackBar.info(
+            message: 'Info: This is an informational message.');
+        break;
+      default:
+        snackBar = ZoniSnackBar.info(message: 'Default message');
+    }
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _showZoniDialog() {
+    ZoniDialogHelper.showConfirmation(
+      context,
+      title: 'Confirm Action',
+      message: 'Are you sure you want to proceed with this action?',
+      isDangerous: true,
+    ).then((confirmed) {
+      if (confirmed == true) {
+        _showZoniSnackBar('success');
+      }
+    });
+  }
+
+  Widget _buildFormComponentsExample() => Column(
+        children: <Widget>[
+          CheckboxListTile(
+            value: _checkboxValue,
+            onChanged: (value) =>
+                setState(() => _checkboxValue = value ?? false),
+            title: const Text('Checkbox option'),
+          ),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Row(
+            children: <Widget>[
+              const Text('Switch: '),
+              ZoniSwitch(
+                value: _switchValue,
+                onChanged: (value) => setState(() => _switchValue = value),
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text('Radio buttons:'),
+              Row(
+                children: <Widget>[
+                  ZoniRadio<String>(
+                    value: 'option1',
+                    groupValue: _radioValue,
+                    onChanged: (value) =>
+                        setState(() => _radioValue = value ?? 'option1'),
+                  ),
+                  const Text('Option 1'),
+                  SizedBox(width: ZoniUI.spacing.md),
+                  ZoniRadio<String>(
+                    value: 'option2',
+                    groupValue: _radioValue,
+                    onChanged: (value) =>
+                        setState(() => _radioValue = value ?? 'option1'),
+                  ),
+                  const Text('Option 2'),
+                ],
+              ),
+            ],
+          ),
+        ],
+      );
+
+  Widget _buildAdditionalComponentsExamples() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // Badges and Chips
+          const Text('Badges & Chips'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Wrap(
+            spacing: ZoniUI.spacing.sm,
+            runSpacing: ZoniUI.spacing.sm,
+            children: [
+              const ZoniBadge(label: 'Primary'),
+              const ZoniBadge(
+                  label: 'Success', variant: ZoniBadgeVariant.success),
+              const ZoniBadge(
+                  label: 'Warning', variant: ZoniBadgeVariant.warning),
+              const ZoniBadge(label: 'Error', variant: ZoniBadgeVariant.error),
+              ZoniChip(
+                label: const Text('Filter Chip'),
+                variant: ZoniChipVariant.filter,
+                selected: true,
+                onSelected: (selected) {},
+              ),
+              ZoniChip.action(
+                label: const Text('Action Chip'),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Progress Indicators
+          const Text('Progress Indicators'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Column(
+            children: [
+              const ZoniProgress.linear(
+                  value: 0.7, showLabel: true, label: 'Loading'),
+              SizedBox(height: ZoniUI.spacing.md),
+              Row(
+                children: [
+                  const ZoniProgress.circular(value: 0.5),
+                  SizedBox(width: ZoniUI.spacing.md),
+                  const ZoniProgress.ring(value: 0.8, showLabel: true),
+                ],
+              ),
+              SizedBox(height: ZoniUI.spacing.md),
+              const ZoniStepProgress(
+                steps: ['Step 1', 'Step 2', 'Step 3', 'Step 4'],
+                currentStep: 1,
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Sliders
+          const Text('Sliders'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Column(
+            children: [
+              ZoniSlider(
+                value: _sliderValue,
+                onChanged: (value) => setState(() => _sliderValue = value),
+                showLabel: true,
+                showValue: true,
+                label: 'Volume',
+              ),
+              SizedBox(height: ZoniUI.spacing.md),
+              ZoniSlider.range(
+                rangeValues: _rangeValues,
+                onRangeChanged: (values) =>
+                    setState(() => _rangeValues = values),
+                showValue: true,
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Dropdown
+          const Text('Dropdown'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniDropdown<String>.outlined(
+            value: _dropdownValue,
+            hint: const Text('Select an option'),
+            items: const [
+              DropdownMenuItem(value: 'option1', child: Text('Option 1')),
+              DropdownMenuItem(value: 'option2', child: Text('Option 2')),
+              DropdownMenuItem(value: 'option3', child: Text('Option 3')),
+            ],
+            onChanged: (value) => setState(() => _dropdownValue = value),
+            label: 'Choose Option',
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Avatars
+          const Text('Avatars'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Row(
+            children: [
+              const ZoniAvatar.small(initials: 'AB'),
+              SizedBox(width: ZoniUI.spacing.sm),
+              const ZoniAvatar(name: 'John Doe'),
+              SizedBox(width: ZoniUI.spacing.sm),
+              const ZoniAvatar.large(initials: 'XY', showBorder: true),
+              SizedBox(width: ZoniUI.spacing.sm),
+              const ZoniAvatarGroup(
+                avatars: [
+                  ZoniAvatar(initials: 'A'),
+                  ZoniAvatar(initials: 'B'),
+                  ZoniAvatar(initials: 'C'),
+                  ZoniAvatar(initials: 'D'),
+                  ZoniAvatar(initials: 'E'),
+                ],
+                maxVisible: 3,
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Tooltips
+          const Text('Tooltips'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Row(
+            children: [
+              ZoniTooltip(
+                message: 'This is a primary tooltip',
+                child: ZoniButton(
+                  onPressed: () {},
+                  child: const Text('Hover me'),
+                ),
+              ),
+              SizedBox(width: ZoniUI.spacing.sm),
+              ZoniTooltip.success(
+                message: 'Success tooltip',
+                child: ZoniButton(
+                  onPressed: () {},
+                  variant: ZoniButtonVariant.success,
+                  child: const Text('Success'),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Breadcrumbs
+          const Text('Breadcrumbs'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniBreadcrumb(
+            items: [
+              ZoniBreadcrumbItem(label: 'Home', onTap: () {}),
+              ZoniBreadcrumbItem(label: 'Products', onTap: () {}),
+              ZoniBreadcrumbItem(label: 'Electronics', onTap: () {}),
+              const ZoniBreadcrumbItem(label: 'Smartphones', isActive: true),
+            ],
+            showHomeIcon: true,
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Pagination
+          const Text('Pagination'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniPagination(
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            onPageChanged: (page) => setState(() => _currentPage = page),
+          ),
+          SizedBox(height: ZoniUI.spacing.md),
+          ZoniPagination.simple(
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            onPageChanged: (page) => setState(() => _currentPage = page),
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Tabs
+          const Text('Tabs'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          const SizedBox(
+            height: 200,
+            child: ZoniTabs(
+              tabs: [
+                Tab(text: 'Tab 1'),
+                Tab(text: 'Tab 2'),
+                Tab(text: 'Tab 3'),
+              ],
+              children: [
+                Center(child: Text('Content for Tab 1')),
+                Center(child: Text('Content for Tab 2')),
+                Center(child: Text('Content for Tab 3')),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget _buildLatestComponentsExamples() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // Radio buttons
+          const Text('Radio Buttons'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Column(
+            children: [
+              ZoniRadio<String>(
+                value: 'option1',
+                groupValue: _radioValue,
+                onChanged: (value) => setState(() => _radioValue = value!),
+                title: const Text('Option 1'),
+              ),
+              ZoniRadio<String>(
+                value: 'option2',
+                groupValue: _radioValue,
+                onChanged: (value) => setState(() => _radioValue = value!),
+                title: const Text('Option 2'),
+                variant: ZoniRadioVariant.success,
+              ),
+            ],
+          ),
+
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Switches
+          const Text('Switches'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Column(
+            children: [
+              ZoniSwitch(
+                value: _switchValue,
+                onChanged: (value) => setState(() => _switchValue = value),
+                title: const Text('Enable notifications'),
+              ),
+              ZoniSwitch(
+                value: !_switchValue,
+                onChanged: (value) => setState(() => _switchValue = !value),
+                title: const Text('Dark mode'),
+                variant: ZoniSwitchVariant.warning,
+                size: ZoniSwitchSize.large,
+              ),
+            ],
+          ),
+
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Alerts
+          const Text('Alerts'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Column(
+            children: [
+              ZoniAlert.success(
+                title: 'Success!',
+                message: 'Your action was completed successfully.',
+                isDismissible: true,
+                onDismiss: () => ZoniUI.logInfo('Alert dismissed'),
+              ),
+              SizedBox(height: ZoniUI.spacing.sm),
+              const ZoniAlert.warning(
+                title: 'Warning',
+                message: 'Please review your input before proceeding.',
+              ),
+              SizedBox(height: ZoniUI.spacing.sm),
+              ZoniAlert.error(
+                title: 'Error',
+                message: 'Something went wrong. Please try again.',
+                actions: [
+                  ZoniButton(
+                    onPressed: () => ZoniUI.logInfo('Retry pressed'),
+                    variant: ZoniButtonVariant.outlined,
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Dividers
+          const Text('Dividers'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Column(
+            children: [
+              const ZoniDivider(),
+              SizedBox(height: ZoniUI.spacing.sm),
+              const ZoniDivider(
+                variant: ZoniDividerVariant.dashed,
+                thicknessLevel: ZoniDividerThickness.medium,
+              ),
+              SizedBox(height: ZoniUI.spacing.sm),
+              const ZoniDividerWithContent(
+                child: Text(
+                  'OR',
+                  style: TextStyle(color: ZoniColors.neutralGray),
+                ),
+              ),
+            ],
+          ),
+
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Grid Layout
+          const Text('Grid Layout'),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniGrid(
+            columns: 3,
+            children: [
+              ZoniGridItem(
+                child: Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: ZoniColors.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Center(child: Text('Item 1')),
+                ),
+              ),
+              ZoniGridItem(
+                span: 2,
+                child: Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: ZoniColors.secondary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Center(child: Text('Item 2 (span 2)')),
+                ),
+              ),
+              ZoniGridItem(
+                child: Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: ZoniColors.warning.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Center(child: Text('Item 3')),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
 
   @override
   void dispose() {

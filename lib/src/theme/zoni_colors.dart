@@ -96,6 +96,31 @@ class ZoniColors {
   /// Info dark color: Fresh Green Dark
   static const Color infoDark = freshGreenDark;
 
+  // On Colors - Text colors for different backgrounds
+  /// Text color on primary background
+  static const Color onPrimary = softWhite;
+
+  /// Text color on secondary background
+  static const Color onSecondary = deepBlack;
+
+  /// Text color on success background
+  static const Color onSuccess = softWhite;
+
+  /// Text color on warning background
+  static const Color onWarning = deepBlack;
+
+  /// Text color on error background
+  static const Color onError = softWhite;
+
+  /// Text color on info background
+  static const Color onInfo = softWhite;
+
+  /// Text color on surface background
+  static const Color onSurface = deepBlack;
+
+  /// Text color on background
+  static const Color onBackground = deepBlack;
+
   // Surface Colors - Using Zoni brand colors
   /// Background color: Soft White
   static const Color background = softWhite;
@@ -113,23 +138,11 @@ class ZoniColors {
   static const Color surfaceContainerHigh = Color(0xFFE9ECEF);
 
   // Text Colors - Using Zoni brand colors for consistency
-  /// Primary text color: Deep Black
-  static const Color onSurface = deepBlack;
-
   /// Secondary text color: Neutral Gray
   static const Color onSurfaceVariant = neutralGray;
 
   /// Disabled text color: Neutral Gray (lighter variant)
   static const Color onSurfaceDisabled = Color(0xFF9AA0A6);
-
-  /// Text on primary color: Soft White
-  static const Color onPrimary = softWhite;
-
-  /// Text on secondary color: Soft White
-  static const Color onSecondary = softWhite;
-
-  /// Text on error color: Soft White
-  static const Color onError = softWhite;
 
   // Border Colors - Using Zoni brand colors
   /// Outline color: Neutral Gray
