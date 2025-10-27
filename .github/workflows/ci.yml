@@ -13,7 +13,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -39,7 +39,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -54,7 +54,7 @@ jobs:
         run: flutter test --coverage
         
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           file: coverage/lcov.info
           fail_ci_if_error: true
@@ -65,7 +65,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -81,7 +81,7 @@ jobs:
         
       - name: Upload golden test failures
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: golden-test-failures
           path: test/goldens/failures/
@@ -92,7 +92,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -117,7 +117,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -141,7 +141,7 @@ jobs:
         run: flutter build web
         
       - name: Upload widgetbook build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: widgetbook-build
           path: widgetbook/build/web/
@@ -152,7 +152,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
