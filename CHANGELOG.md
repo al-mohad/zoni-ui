@@ -5,6 +5,140 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2024-10-27
+
+### Added
+
+#### Advanced Display Components
+- **ZoniTable**: Comprehensive data table component
+  - Column configuration with custom headers and cell builders
+  - Row selection (single/multiple) with callbacks
+  - Sortable columns with ascending/descending indicators
+  - Responsive design with horizontal scrolling
+  - Customizable styling for headers, rows, and cells
+  - Pagination support integration
+- **ZoniAccordion**: Expandable/collapsible content component
+  - Single or multiple expansion modes
+  - Custom expand/collapse icons with smooth animations
+  - Header and content styling customization
+  - 5 semantic variants: primary, secondary, success, warning, error
+  - Animation duration control and easing curves
+
+#### Advanced Navigation Components
+- **ZoniStepper**: Step-by-step navigation component
+  - 5 step states: inactive, active, completed, error, disabled
+  - 2 orientations: horizontal, vertical
+  - 3 sizes: small, medium, large
+  - Custom step icons and content with flexible builders
+  - Optional steps support for non-linear workflows
+  - Custom controls builder with ControlsDetails
+  - Connector customization (color, thickness, style)
+- **ZoniSidebar**: Collapsible sidebar navigation
+  - Nested menu items with unlimited depth
+  - Expand/collapse animations with smooth transitions
+  - Custom icons and badges for menu items
+  - Header and footer sections with custom content
+  - Responsive design with overlay mode for mobile
+  - Theme-aware styling with dark/light mode support
+
+#### Advanced Feedback Components
+- **ZoniModal**: Overlay modal/dialog component
+  - Multiple sizes: small, medium, large, fullscreen
+  - Backdrop blur and color customization
+  - ESC key and backdrop tap to close functionality
+  - Custom header, body, and footer sections
+  - Smooth show/hide animations with fade and scale effects
+  - Barrier dismissible control with custom callbacks
+
+#### Advanced Input Components
+- **ZoniDatePicker**: Material Design 3 date picker integration
+  - Date range selection support with start/end dates
+  - Custom date formatting with locale support
+  - Validation with error states and custom validators
+  - Internationalization support for multiple locales
+  - Custom styling and theming integration
+  - Accessibility features with screen reader support
+- **ZoniTimePicker**: Material Design 3 time picker integration
+  - 12/24 hour format support with automatic detection
+  - Custom time formatting with locale preferences
+  - Validation with error states and time constraints
+  - Custom styling and theming integration
+  - Accessibility features with keyboard navigation
+- **ZoniFileUpload**: Drag-and-drop file upload component
+  - Multiple file selection with configurable limits
+  - File type validation (extensions, MIME types)
+  - File size validation with custom size limits
+  - Upload progress indication with percentage display
+  - Custom upload area styling with drag states
+  - File preview and removal functionality
+  - Error handling with detailed error messages
+- **ZoniSearchField**: Search input with autocomplete
+  - Debounced search queries with configurable delay
+  - Custom suggestion builder with flexible layouts
+  - Keyboard navigation (arrow keys, enter, escape)
+  - Focus management and overlay positioning
+  - Custom styling for input and suggestions
+  - Search history and recent searches support
+
+### Enhanced
+
+#### Technical Architecture
+- **Overlay Management**: Advanced overlay system using Flutter's Overlay API
+  - Layer Link positioning with CompositedTransformTarget/Follower
+  - Precise overlay positioning for floating elements
+  - Z-index management for complex UI hierarchies
+- **Animation System**: Comprehensive animation framework
+  - Animation controllers with SingleTickerProviderStateMixin
+  - Smooth transitions with configurable easing curves
+  - Performance-optimized animations with proper disposal
+- **Focus Management**: Advanced keyboard interaction system
+  - Proper focus handling with FocusNode management
+  - Keyboard listeners for ESC key and navigation
+  - Tab order management for accessibility
+- **File Validation**: Robust file handling system
+  - Comprehensive file type and size validation
+  - MIME type detection and validation
+  - Error handling with user-friendly messages
+- **Search Optimization**: Performance-optimized search functionality
+  - Debouncing implementation for search queries
+  - Efficient suggestion filtering and display
+  - Memory management for large suggestion lists
+
+#### Design System Maturity
+- **Component Consistency**: Unified design language across all components
+  - Consistent spacing, typography, and color usage
+  - Standardized component APIs and naming conventions
+  - Unified error handling and validation patterns
+- **Accessibility Improvements**: Enhanced accessibility features
+  - Comprehensive screen reader support
+  - Keyboard navigation for all interactive elements
+  - High contrast mode support
+  - Focus indicators and semantic markup
+- **Responsive Design**: Advanced responsive capabilities
+  - Breakpoint-aware component behavior
+  - Mobile-first design approach
+  - Adaptive layouts for different screen sizes
+
+### Fixed
+- **ZoniStepper Implementation**: Resolved file corruption issues during development
+  - Fixed debug method conflicts causing compilation errors
+  - Proper method naming with private underscore prefixes
+  - Stable file creation using shell heredoc pattern
+- **Type Safety**: Enhanced generic type support
+  - Proper type constraints for generic components
+  - Improved type inference and error messages
+  - Null safety compliance across all new components
+
+### Technical Improvements
+- **Performance Optimization**: Enhanced rendering performance
+  - Efficient widget rebuilding with proper keys
+  - Optimized animation performance
+  - Memory leak prevention with proper disposal
+- **Code Quality**: Improved code architecture
+  - Consistent error handling patterns
+  - Comprehensive documentation coverage
+  - Enhanced debugging capabilities
+
 ## [0.1.1] - 2024-10-26
 
 ### Added
