@@ -70,7 +70,8 @@ class ZoniUploadedFile {
   String get formattedSize {
     if (size < 1024) return '${size}B';
     if (size < 1024 * 1024) return '${(size / 1024).toStringAsFixed(1)}KB';
-    if (size < 1024 * 1024 * 1024) return '${(size / (1024 * 1024)).toStringAsFixed(1)}MB';
+    if (size < 1024 * 1024 * 1024)
+      return '${(size / (1024 * 1024)).toStringAsFixed(1)}MB';
     return '${(size / (1024 * 1024 * 1024)).toStringAsFixed(1)}GB';
   }
 }
@@ -484,22 +485,25 @@ class _ZoniFileUploadState extends State<ZoniFileUpload> {
     if (mimeType.startsWith('video/')) return Icons.video_file;
     if (mimeType.startsWith('audio/')) return Icons.audio_file;
     if (mimeType.contains('pdf')) return Icons.picture_as_pdf;
-    if (mimeType.contains('word') || mimeType.contains('document')) return Icons.description;
-    if (mimeType.contains('spreadsheet') || mimeType.contains('excel')) return Icons.table_chart;
-    if (mimeType.contains('presentation') || mimeType.contains('powerpoint')) return Icons.slideshow;
+    if (mimeType.contains('word') || mimeType.contains('document'))
+      return Icons.description;
+    if (mimeType.contains('spreadsheet') || mimeType.contains('excel'))
+      return Icons.table_chart;
+    if (mimeType.contains('presentation') || mimeType.contains('powerpoint'))
+      return Icons.slideshow;
     if (mimeType.startsWith('text/')) return Icons.text_snippet;
     return Icons.insert_drive_file;
   }
 
   Color _getFileIconColor(String mimeType) {
-    if (mimeType.startsWith('image/')) return Colors.green;
-    if (mimeType.startsWith('video/')) return Colors.red;
-    if (mimeType.startsWith('audio/')) return Colors.purple;
-    if (mimeType.contains('pdf')) return Colors.red;
-    if (mimeType.contains('word')) return Colors.blue;
-    if (mimeType.contains('excel')) return Colors.green;
-    if (mimeType.contains('powerpoint')) return Colors.orange;
-    return Colors.grey;
+    if (mimeType.startsWith('image/')) return ZoniColors.freshGreen;
+    if (mimeType.startsWith('video/')) return ZoniColors.error;
+    if (mimeType.startsWith('audio/')) return ZoniColors.primary;
+    if (mimeType.contains('pdf')) return ZoniColors.error;
+    if (mimeType.contains('word')) return ZoniColors.primary;
+    if (mimeType.contains('excel')) return ZoniColors.freshGreen;
+    if (mimeType.contains('powerpoint')) return ZoniColors.warning;
+    return ZoniColors.neutralGray;
   }
 
   double _getHeight() {
@@ -542,7 +546,8 @@ class _ZoniFileUploadState extends State<ZoniFileUpload> {
 
   Color get _backgroundColor {
     if (widget.backgroundColor != null) return widget.backgroundColor!;
-    if (_isDragOver) return widget.dragOverColor ?? ZoniColors.primary.withValues(alpha: 0.1);
+    if (_isDragOver)
+      return widget.dragOverColor ?? ZoniColors.primary.withValues(alpha: 0.1);
     switch (widget.variant) {
       case ZoniFileUploadVariant.standard:
         return Colors.transparent;
@@ -592,15 +597,18 @@ class _ZoniFileUploadState extends State<ZoniFileUpload> {
 
   TextStyle _getTitleStyle(ThemeData theme) {
     return theme.textTheme.titleMedium?.copyWith(
-      color: widget.textColor ?? _getTextColor(theme),
-      fontWeight: FontWeight.w500,
-    ) ?? const TextStyle();
+          color: widget.textColor ?? _getTextColor(theme),
+          fontWeight: FontWeight.w500,
+        ) ??
+        const TextStyle();
   }
 
   TextStyle _getSubtitleStyle(ThemeData theme) {
     return theme.textTheme.bodyMedium?.copyWith(
-      color: widget.textColor?.withValues(alpha: 0.7) ?? _getTextColor(theme).withValues(alpha: 0.7),
-    ) ?? const TextStyle();
+          color: widget.textColor?.withValues(alpha: 0.7) ??
+              _getTextColor(theme).withValues(alpha: 0.7),
+        ) ??
+        const TextStyle();
   }
 
   Color _getTextColor(ThemeData theme) {

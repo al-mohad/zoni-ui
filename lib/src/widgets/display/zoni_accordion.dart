@@ -83,19 +83,19 @@ class ZoniAccordionItem {
     Color? headerBackgroundColor,
     Widget? icon,
     Widget? trailing,
-  }) {
-    return ZoniAccordionItem(
-      header: header ?? this.header,
-      content: content ?? this.content,
-      key: key ?? this.key,
-      isExpanded: isExpanded ?? this.isExpanded,
-      canToggleExpansion: canToggleExpansion ?? this.canToggleExpansion,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
-      icon: icon ?? this.icon,
-      trailing: trailing ?? this.trailing,
-    );
-  }
+  }) =>
+      ZoniAccordionItem(
+        header: header ?? this.header,
+        content: content ?? this.content,
+        key: key ?? this.key,
+        isExpanded: isExpanded ?? this.isExpanded,
+        canToggleExpansion: canToggleExpansion ?? this.canToggleExpansion,
+        backgroundColor: backgroundColor ?? this.backgroundColor,
+        headerBackgroundColor:
+            headerBackgroundColor ?? this.headerBackgroundColor,
+        icon: icon ?? this.icon,
+        trailing: trailing ?? this.trailing,
+      );
 }
 
 /// An expandable/collapsible content component following Zoni design system.
@@ -122,8 +122,8 @@ class ZoniAccordionItem {
 class ZoniAccordion extends StatefulWidget {
   /// Creates a Zoni accordion.
   const ZoniAccordion({
-    super.key,
     required this.items,
+    super.key,
     this.variant = ZoniAccordionVariant.standard,
     this.size = ZoniAccordionSize.medium,
     this.allowMultipleExpanded = true,
@@ -206,17 +206,6 @@ class _ZoniAccordionState extends State<ZoniAccordion> {
     }
   }
 
-  EdgeInsets get _itemPadding {
-    switch (widget.size) {
-      case ZoniAccordionSize.small:
-        return const EdgeInsets.all(ZoniSpacing.sm);
-      case ZoniAccordionSize.medium:
-        return const EdgeInsets.all(ZoniSpacing.md);
-      case ZoniAccordionSize.large:
-        return const EdgeInsets.all(ZoniSpacing.lg);
-    }
-  }
-
   EdgeInsets get _headerPadding {
     switch (widget.size) {
       case ZoniAccordionSize.small:
@@ -280,10 +269,9 @@ class _ZoniAccordionState extends State<ZoniAccordion> {
   Color get _borderColor => widget.borderColor ?? ZoniColors.outline;
   Color get _dividerColor => widget.dividerColor ?? ZoniColors.outline;
 
-  BorderRadius get _borderRadius {
-    return widget.borderRadius ??
-        const BorderRadius.all(Radius.circular(ZoniBorderRadius.md));
-  }
+  BorderRadius get _borderRadius =>
+      widget.borderRadius ??
+      const BorderRadius.all(Radius.circular(ZoniBorderRadius.md));
 
   BoxDecoration get _containerDecoration {
     switch (widget.variant) {
@@ -307,7 +295,7 @@ class _ZoniAccordionState extends State<ZoniAccordion> {
         return BoxDecoration(
           color: _backgroundColor,
           borderRadius: _borderRadius,
-          boxShadow: [
+          boxShadow: <BoxShadow>[
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.1),
               blurRadius: widget.elevation,
@@ -335,73 +323,73 @@ class _ZoniAccordionState extends State<ZoniAccordion> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: widget.margin,
-      decoration: _containerDecoration,
-      child: Column(
-        children: _items.asMap().entries.map((entry) {
-          final int index = entry.key;
-          final ZoniAccordionItem item = entry.value;
-          final bool isLast = index == _items.length - 1;
+  Widget build(BuildContext context) => Container(
+        margin: widget.margin,
+        decoration: _containerDecoration,
+        child: Column(
+          children: _items
+              .asMap()
+              .entries
+              .map((MapEntry<int, ZoniAccordionItem> entry) {
+            final int index = entry.key;
+            final ZoniAccordionItem item = entry.value;
+            final bool isLast = index == _items.length - 1;
 
-          return Column(
-            children: [
-              _buildAccordionItem(item, index),
-              if (!isLast && widget.showDividers)
-                Divider(
-                  color: _dividerColor,
-                  height: 1,
-                  thickness: 1,
-                ),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget _buildAccordionItem(ZoniAccordionItem item, int index) {
-    return ExpansionTile(
-      key: item.key != null ? Key(item.key!) : null,
-      title: DefaultTextStyle(
-        style: ZoniTextStyles.titleMedium.copyWith(
-          color: ZoniColors.onSurface,
-          fontWeight: FontWeight.w500,
+            return Column(
+              children: <Widget>[
+                _buildAccordionItem(item, index),
+                if (!isLast && widget.showDividers)
+                  Divider(
+                    color: _dividerColor,
+                    height: 1,
+                    thickness: 1,
+                  ),
+              ],
+            );
+          }).toList(),
         ),
-        child: item.header,
-      ),
-      leading: item.icon,
-      trailing: item.trailing ??
-          Icon(
-            item.isExpanded
-                ? (widget.collapseIcon ?? widget.expandIcon)
-                : widget.expandIcon,
-            color: ZoniColors.onSurfaceVariant,
+      );
+
+  Widget _buildAccordionItem(ZoniAccordionItem item, int index) =>
+      ExpansionTile(
+        key: item.key != null ? Key(item.key!) : null,
+        title: DefaultTextStyle(
+          style: ZoniTextStyles.titleMedium.copyWith(
+            color: ZoniColors.onSurface,
+            fontWeight: FontWeight.w500,
           ),
-      initiallyExpanded: item.isExpanded,
-      maintainState: true,
-      backgroundColor: item.headerBackgroundColor,
-      collapsedBackgroundColor: item.headerBackgroundColor,
-      tilePadding: _headerPadding,
-      childrenPadding: _contentPadding,
-      expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      expandedAlignment: Alignment.centerLeft,
-      onExpansionChanged: item.canToggleExpansion
-          ? (expanded) => _handleExpansionChanged(index, expanded)
-          : null,
-      children: [
-        Container(
-          width: double.infinity,
-          color: item.backgroundColor,
-          child: DefaultTextStyle(
-            style: ZoniTextStyles.bodyMedium.copyWith(
-              color: ZoniColors.onSurface,
+          child: item.header,
+        ),
+        leading: item.icon,
+        trailing: item.trailing ??
+            Icon(
+              item.isExpanded
+                  ? (widget.collapseIcon ?? widget.expandIcon)
+                  : widget.expandIcon,
+              color: ZoniColors.onSurfaceVariant,
             ),
-            child: item.content,
+        initiallyExpanded: item.isExpanded,
+        maintainState: true,
+        backgroundColor: item.headerBackgroundColor,
+        collapsedBackgroundColor: item.headerBackgroundColor,
+        tilePadding: _headerPadding,
+        childrenPadding: _contentPadding,
+        expandedCrossAxisAlignment: CrossAxisAlignment.start,
+        expandedAlignment: Alignment.centerLeft,
+        onExpansionChanged: item.canToggleExpansion
+            ? (bool expanded) => _handleExpansionChanged(index, expanded)
+            : null,
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            color: item.backgroundColor,
+            child: DefaultTextStyle(
+              style: ZoniTextStyles.bodyMedium.copyWith(
+                color: ZoniColors.onSurface,
+              ),
+              child: item.content,
+            ),
           ),
-        ),
-      ],
-    );
-  }
+        ],
+      );
 }

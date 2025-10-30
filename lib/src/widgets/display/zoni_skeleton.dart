@@ -39,9 +39,9 @@ class ZoniSkeleton extends StatefulWidget {
     this.animated = true,
     this.baseColor,
     this.highlightColor,
-  }) : width = size,
-       height = size,
-       borderRadius = size / 2;
+  })  : width = size,
+        height = size,
+        borderRadius = size / 2;
 
   /// Creates a rectangular skeleton.
   const ZoniSkeleton.rectangle({
@@ -101,11 +101,10 @@ class _ZoniSkeletonState extends State<ZoniSkeleton>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final baseColor = widget.baseColor ?? 
-        ZoniColors.neutralGray.withValues(alpha: 0.1);
-    final highlightColor = widget.highlightColor ?? 
-        ZoniColors.neutralGray.withValues(alpha: 0.2);
+    final baseColor =
+        widget.baseColor ?? ZoniColors.neutralGray.withValues(alpha: 0.1);
+    final highlightColor =
+        widget.highlightColor ?? ZoniColors.neutralGray.withValues(alpha: 0.2);
 
     return AnimatedBuilder(
       animation: _animation,
@@ -289,7 +288,7 @@ class ZoniSkeletonParagraph extends StatelessWidget {
       children: List.generate(lines, (index) {
         final isLast = index == lines - 1;
         final width = isLast ? 0.7 : 1.0;
-        
+
         return Padding(
           padding: EdgeInsets.only(bottom: isLast ? 0 : spacing),
           child: ZoniSkeleton.text(

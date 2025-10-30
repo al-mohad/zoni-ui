@@ -241,22 +241,22 @@ class ZoniMedia extends StatelessWidget {
     switch (extension) {
       case 'pdf':
         icon = Icons.picture_as_pdf;
-        iconColor = Colors.red;
+        iconColor = ZoniColors.error;
         break;
       case 'doc':
       case 'docx':
         icon = Icons.description;
-        iconColor = Colors.blue;
+        iconColor = ZoniColors.primary;
         break;
       case 'xls':
       case 'xlsx':
         icon = Icons.table_chart;
-        iconColor = Colors.green;
+        iconColor = ZoniColors.freshGreen;
         break;
       case 'ppt':
       case 'pptx':
         icon = Icons.slideshow;
-        iconColor = Colors.orange;
+        iconColor = ZoniColors.warning;
         break;
       default:
         icon = Icons.insert_drive_file;
