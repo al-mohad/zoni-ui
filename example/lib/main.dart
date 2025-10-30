@@ -68,6 +68,60 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
               ),
             ],
           ),
+          drawer: ZoniDrawer(
+            header: const ZoniDrawerHeader(
+              title: 'ZoniUI Demo',
+              subtitle: 'Component Showcase',
+              avatar: CircleAvatar(
+                backgroundImage: NetworkImage('https://picsum.photos/40/40'),
+              ),
+            ),
+            items: [
+              ZoniDrawerItem(
+                icon: Icons.home,
+                title: 'Home',
+                onTap: () => Navigator.pop(context),
+              ),
+              ZoniDrawerItem(
+                icon: Icons.widgets,
+                title: 'Components',
+                badge: '50+',
+                children: [
+                  ZoniDrawerItem(
+                    icon: Icons.smart_button,
+                    title: 'Buttons',
+                    onTap: () => Navigator.pop(context),
+                  ),
+                  ZoniDrawerItem(
+                    icon: Icons.credit_card,
+                    title: 'Cards',
+                    onTap: () => Navigator.pop(context),
+                  ),
+                  ZoniDrawerItem(
+                    icon: Icons.text_fields,
+                    title: 'Forms',
+                    onTap: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              ZoniDrawerItem(
+                icon: Icons.palette,
+                title: 'Theme',
+                onTap: () => Navigator.pop(context),
+              ),
+              ZoniDrawerItem(
+                icon: Icons.settings,
+                title: 'Settings',
+                onTap: () => Navigator.pop(context),
+              ),
+              ZoniDrawerItem(
+                icon: Icons.help,
+                title: 'Help & Support',
+                badge: 'New',
+                onTap: () => Navigator.pop(context),
+              ),
+            ],
+          ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(ZoniUI.spacing.md),
             child: Column(
@@ -116,6 +170,21 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                 _buildSection(
                   'Latest Components',
                   _buildLatestComponentsExamples(),
+                ),
+                SizedBox(height: ZoniUI.spacing.xl),
+                _buildSection(
+                  'Design System Components',
+                  _buildDesignSystemExamples(),
+                ),
+                SizedBox(height: ZoniUI.spacing.xl),
+                _buildSection(
+                  'Advanced Components',
+                  _buildAdvancedComponentsExamples(),
+                ),
+                SizedBox(height: ZoniUI.spacing.xl),
+                _buildSection(
+                  'Content & Media Components',
+                  _buildContentMediaExamples(),
                 ),
               ],
             ),
@@ -913,6 +982,562 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                 ),
               ),
             ],
+          ),
+        ],
+      );
+
+  Widget _buildDesignSystemExamples() => Column(
+        children: <Widget>[
+          // Color Palette Examples
+          const ZoniColorPalette.primary(),
+          SizedBox(height: ZoniUI.spacing.lg),
+          const ZoniColorPalette.semantic(),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Code Block Examples
+          const ZoniCodeBlock(
+            code: '''
+import 'package:flutter/material.dart';
+import 'package:zoni_ui/zoni_ui.dart';
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ZoniButton(
+      onPressed: () => print('Hello Zoni!'),
+      child: Text('Click me'),
+    );
+  }
+}''',
+            language: 'dart',
+            title: 'Flutter Example',
+            showLineNumbers: true,
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Status Indicator Examples
+          Wrap(
+            spacing: ZoniUI.spacing.md,
+            runSpacing: ZoniUI.spacing.sm,
+            children: const [
+              ZoniStatusIndicator.success(),
+              ZoniStatusIndicator.warning(),
+              ZoniStatusIndicator.error(),
+              ZoniStatusIndicator.info(),
+              ZoniStatusIndicator.processing(),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Info Card Examples
+          const ZoniInfoCard.success(
+            title: 'Success',
+            description: 'Your action was completed successfully.',
+          ),
+          SizedBox(height: ZoniUI.spacing.sm),
+          const ZoniInfoCard.warning(
+            title: 'Warning',
+            description: 'Please review your settings before proceeding.',
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Feature Card Examples
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: 2,
+            crossAxisSpacing: ZoniUI.spacing.md,
+            mainAxisSpacing: ZoniUI.spacing.md,
+            children: const [
+              ZoniFeatureCard(
+                title: 'Fast Performance',
+                description: 'Optimized for speed and efficiency.',
+                icon: Icons.speed,
+              ),
+              ZoniFeatureCard(
+                title: 'Easy to Use',
+                description: 'Intuitive design for better user experience.',
+                icon: Icons.touch_app,
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Metric Card Examples
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: 2,
+            crossAxisSpacing: ZoniUI.spacing.md,
+            mainAxisSpacing: ZoniUI.spacing.md,
+            children: const [
+              ZoniMetricCard(
+                title: 'Total Users',
+                value: '12,345',
+                trend: ZoniMetricTrend.up,
+                trendValue: '+12%',
+                icon: Icons.people,
+              ),
+              ZoniMetricCard(
+                title: 'Revenue',
+                value: '\$45,678',
+                trend: ZoniMetricTrend.up,
+                trendValue: '+8%',
+                icon: Icons.attach_money,
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Empty State Examples
+          const ZoniEmptyState.noData(),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Skeleton Examples
+          const ZoniSkeletonCard(),
+        ],
+      );
+
+  Widget _buildAdvancedComponentsExamples() {
+    return Column(
+      children: [
+        // ZoniChart example
+        SizedBox(
+          height: 300,
+          child: ZoniChart(
+            type: ZoniChartType.line,
+            title: 'Sales Over Time',
+            series: [
+              ZoniChartSeries(
+                name: 'Sales',
+                data: [
+                  ZoniChartDataPoint(x: 1, y: 10),
+                  ZoniChartDataPoint(x: 2, y: 20),
+                  ZoniChartDataPoint(x: 3, y: 15),
+                  ZoniChartDataPoint(x: 4, y: 25),
+                  ZoniChartDataPoint(x: 5, y: 30),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: ZoniUI.spacing.md),
+
+        // ZoniMultiSelect example
+        ZoniMultiSelect<String>(
+          options: [
+            ZoniMultiSelectOption(value: 'option1', label: 'Option 1'),
+            ZoniMultiSelectOption(value: 'option2', label: 'Option 2'),
+            ZoniMultiSelectOption(value: 'option3', label: 'Option 3'),
+          ],
+          selectedValues: [],
+          onChanged: (values) {},
+          title: 'Select Options',
+        ),
+        SizedBox(height: ZoniUI.spacing.md),
+
+        // ZoniCalendar example
+        SizedBox(
+          height: 400,
+          child: ZoniCalendar(
+            events: [
+              ZoniCalendarEvent(
+                id: '1',
+                title: 'Meeting',
+                startTime: DateTime.now(),
+                endTime: DateTime.now().add(Duration(hours: 1)),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: ZoniUI.spacing.md),
+
+        // ZoniStatsCard example
+        Row(
+          children: [
+            Expanded(
+              child: ZoniStatsCard(
+                title: 'Total Sales',
+                value: '\$12,345',
+                icon: Icons.trending_up,
+                trend: ZoniStatsTrend.up,
+                trendValue: '+12.5%',
+                color: ZoniColors.success,
+              ),
+            ),
+            SizedBox(width: ZoniUI.spacing.sm),
+            Expanded(
+              child: ZoniStatsCard(
+                title: 'Active Users',
+                value: '1,234',
+                icon: Icons.people,
+                trend: ZoniStatsTrend.down,
+                trendValue: '-2.1%',
+                color: ZoniColors.primary,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: ZoniUI.spacing.md),
+
+        // ZoniUserProfile example
+        ZoniUserProfile(
+          profile: ZoniUserProfileData(
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            role: 'Senior Developer',
+            department: 'Engineering',
+            status: ZoniUserStatus.online,
+            badges: [
+              ZoniUserBadge(label: 'Top Performer', icon: Icons.star),
+              ZoniUserBadge(label: 'Team Lead', icon: Icons.group),
+            ],
+            stats: {
+              'Projects': '12',
+              'Commits': '1,234',
+              'Reviews': '89',
+            },
+          ),
+          variant: ZoniUserProfileVariant.card,
+        ),
+        SizedBox(height: ZoniUI.spacing.md),
+
+        // ZoniPricingCard example
+        SizedBox(
+          height: 400,
+          child: Row(
+            children: [
+              Expanded(
+                child: ZoniPricingCard(
+                  plan: ZoniPricingPlan(
+                    name: 'Basic',
+                    price: '9',
+                    description: 'Perfect for individuals',
+                    features: [
+                      '5 Projects',
+                      '10GB Storage',
+                      'Email Support',
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: ZoniUI.spacing.sm),
+              Expanded(
+                child: ZoniPricingCard(
+                  plan: ZoniPricingPlan(
+                    name: 'Pro',
+                    price: '29',
+                    description: 'Best for teams',
+                    features: [
+                      'Unlimited Projects',
+                      '100GB Storage',
+                      'Priority Support',
+                      'Advanced Analytics',
+                    ],
+                    isPopular: true,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: ZoniUI.spacing.md),
+
+        // ZoniTestimonial example
+        ZoniTestimonial(
+          testimonial: ZoniTestimonialData(
+            content:
+                'This product has completely transformed our workflow. Highly recommended!',
+            author: 'Jane Smith',
+            authorTitle: 'Product Manager',
+            authorCompany: 'Tech Corp',
+            rating: 5,
+            date: DateTime.now().subtract(Duration(days: 30)),
+          ),
+          variant: ZoniTestimonialVariant.card,
+        ),
+        SizedBox(height: ZoniUI.spacing.md),
+
+        // ZoniFeatureShowcase example
+        ZoniFeatureShowcase(
+          features: [
+            ZoniFeature(
+              title: 'Fast Performance',
+              description: 'Lightning-fast performance with optimized code',
+              icon: Icons.speed,
+              color: ZoniColors.success,
+            ),
+            ZoniFeature(
+              title: 'Secure',
+              description: 'Enterprise-grade security for your data',
+              icon: Icons.security,
+              color: ZoniColors.primary,
+            ),
+            ZoniFeature(
+              title: 'Scalable',
+              description: 'Scales with your business needs',
+              icon: Icons.trending_up,
+              color: ZoniColors.warning,
+            ),
+            ZoniFeature(
+              title: 'Easy to Use',
+              description: 'Intuitive interface that anyone can use',
+              icon: Icons.touch_app,
+              color: ZoniColors.info,
+            ),
+          ],
+          variant: ZoniFeatureShowcaseVariant.grid,
+          crossAxisCount: 2,
+        ),
+        SizedBox(height: ZoniUI.spacing.md),
+
+        // ZoniActivityFeed example
+        SizedBox(
+          height: 300,
+          child: ZoniActivityFeed(
+            items: [
+              ZoniActivityItem(
+                id: '1',
+                title: 'John commented on your post',
+                description: 'Great work on the new feature!',
+                timestamp: DateTime.now().subtract(Duration(minutes: 5)),
+                icon: Icons.comment,
+                color: ZoniColors.primary,
+                avatar: CircleAvatar(
+                  radius: 16,
+                  backgroundImage: NetworkImage('https://picsum.photos/32/32'),
+                ),
+              ),
+              ZoniActivityItem(
+                id: '2',
+                title: 'Sarah liked your post',
+                description: 'Flutter UI Components Tutorial',
+                timestamp: DateTime.now().subtract(Duration(hours: 2)),
+                icon: Icons.favorite,
+                color: ZoniColors.error,
+                avatar: CircleAvatar(
+                  radius: 16,
+                  backgroundImage:
+                      NetworkImage('https://picsum.photos/32/32?random=2'),
+                ),
+              ),
+              ZoniActivityItem(
+                id: '3',
+                title: 'Mike shared your article',
+                description: 'Building Better UIs with Flutter',
+                timestamp: DateTime.now().subtract(Duration(days: 1)),
+                icon: Icons.share,
+                color: ZoniColors.success,
+                avatar: CircleAvatar(
+                  radius: 16,
+                  backgroundImage:
+                      NetworkImage('https://picsum.photos/32/32?random=3'),
+                ),
+              ),
+            ],
+            onItemTap: (item) => print('Activity tapped: ${item.title}'),
+          ),
+        ),
+        SizedBox(height: ZoniUI.spacing.md),
+
+        // ZoniNotificationPanel example
+        SizedBox(
+          height: 250,
+          child: ZoniNotificationPanel(
+            notifications: [
+              ZoniNotificationItem(
+                id: '1',
+                title: 'New Message',
+                message: 'You have received a new message from John',
+                type: ZoniNotificationType.info,
+                timestamp: DateTime.now().subtract(Duration(minutes: 10)),
+                isRead: false,
+              ),
+              ZoniNotificationItem(
+                id: '2',
+                title: 'System Update',
+                message: 'System will be updated tonight at 2 AM',
+                type: ZoniNotificationType.warning,
+                timestamp: DateTime.now().subtract(Duration(hours: 1)),
+                isRead: true,
+              ),
+              ZoniNotificationItem(
+                id: '3',
+                title: 'Payment Successful',
+                message: 'Your payment of \$29.99 has been processed',
+                type: ZoniNotificationType.success,
+                timestamp: DateTime.now().subtract(Duration(days: 1)),
+                isRead: true,
+              ),
+            ],
+            onNotificationTap: (notification) =>
+                print('Notification tapped: ${notification.title}'),
+            onMarkAllAsRead: () => print('Mark all as read'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContentMediaExamples() => Column(
+        children: <Widget>[
+          // ZoniHeader Examples
+          const ZoniHeader(
+            title: 'Welcome to ZoniUI',
+            subtitle: 'A comprehensive Flutter design system',
+            description:
+                'Build beautiful and consistent applications with our component library.',
+            showDivider: true,
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // ZoniHeroHeader Example
+          ZoniHeroHeader(
+            title: 'Get Started Today',
+            subtitle: 'Join thousands of developers',
+            description: 'Build amazing apps with our design system',
+            height: 200,
+            actions: [
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Get Started'),
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // ZoniMedia Examples
+          Row(
+            children: [
+              Expanded(
+                child: ZoniMedia(
+                  src: 'https://picsum.photos/300/200',
+                  type: ZoniMediaType.image,
+                  height: 150,
+                  onTap: () => print('Image tapped'),
+                ),
+              ),
+              SizedBox(width: ZoniUI.spacing.sm),
+              Expanded(
+                child: ZoniMedia(
+                  src: 'sample_video.mp4',
+                  type: ZoniMediaType.video,
+                  height: 150,
+                  showControls: true,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // ZoniArticleCard Example
+          ZoniArticleCard(
+            title: 'Getting Started with ZoniUI',
+            excerpt:
+                'Learn how to integrate ZoniUI into your Flutter project and start building beautiful applications.',
+            author: const ZoniAuthor(
+              name: 'John Doe',
+              avatar: 'https://picsum.photos/40/40',
+            ),
+            publishDate: DateTime.now().subtract(const Duration(days: 2)),
+            readTime: '5 min read',
+            featuredImage: 'https://picsum.photos/400/200',
+            tags: const ['Flutter', 'UI', 'Design'],
+            onTap: () => print('Article tapped'),
+            onTagTap: (tag) => print('Tag tapped: $tag'),
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // ZoniRangeSlider Example
+          ZoniRangeSlider(
+            values: const RangeValues(20, 80),
+            onChanged: (values) => print('Range changed: $values'),
+            min: 0,
+            max: 100,
+            divisions: 10,
+            prefix: '\$',
+            labels: const RangeLabels('20', '80'),
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // ZoniFilterBar Example
+          ZoniFilterBar(
+            title: 'Filter Options',
+            filters: [
+              const ZoniFilterOption(
+                id: 'all',
+                label: 'All',
+                count: 150,
+                isSelected: true,
+              ),
+              const ZoniFilterOption(
+                id: 'flutter',
+                label: 'Flutter',
+                icon: Icons.flutter_dash,
+                count: 45,
+              ),
+              const ZoniFilterOption(
+                id: 'design',
+                label: 'Design',
+                icon: Icons.design_services,
+                count: 32,
+              ),
+              const ZoniFilterOption(
+                id: 'ui',
+                label: 'UI/UX',
+                icon: Icons.palette,
+                count: 28,
+              ),
+            ],
+            onFilterChanged: (filter) =>
+                print('Filter changed: ${filter.label}'),
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // ZoniArticle Example
+          ZoniArticle(
+            title: 'Building Beautiful Flutter UIs with ZoniUI',
+            content: '''
+ZoniUI is a comprehensive Flutter design system that provides developers with a complete set of UI components for building modern, beautiful applications.
+
+## Key Features
+
+- **Consistent Design**: All components follow Material Design 3 principles
+- **Easy Integration**: Simple to integrate into existing Flutter projects
+- **Customizable**: Extensive theming and customization options
+- **Well Documented**: Comprehensive documentation and examples
+
+## Getting Started
+
+To get started with ZoniUI, add it to your pubspec.yaml:
+
+```yaml
+dependencies:
+  zoni_ui: ^0.2.0
+```
+
+Then import it in your Dart files:
+
+```dart
+import 'package:zoni_ui/zoni_ui.dart';
+```
+
+## Components
+
+ZoniUI includes over 50+ components including buttons, forms, navigation, data display, and more.
+
+Start building amazing Flutter apps today with ZoniUI!
+            ''',
+            author: const ZoniAuthor(
+              name: 'ZoniUI Team',
+              bio: 'The team behind the ZoniUI design system',
+              avatar: 'https://picsum.photos/60/60',
+            ),
+            publishDate: DateTime.now().subtract(const Duration(days: 1)),
+            readTime: '8 min read',
+            featuredImage: 'https://picsum.photos/800/400',
+            tags: const ['Flutter', 'UI', 'Design System', 'Components'],
+            onTagTap: (tag) => print('Tag tapped: $tag'),
           ),
         ],
       );

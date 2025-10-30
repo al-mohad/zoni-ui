@@ -5,6 +5,289 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.3.0] - 2025-10-30
+
+### Added
+
+#### Content & Media Components
+- **ZoniArticle** - Article content component for blog posts and articles
+  - Author information with avatar and bio support
+  - Publication date and read time display
+  - Tag system with interactive tag selection
+  - Featured image support with error handling
+  - Excerpt display for article previews
+  - Customizable metadata display
+  - Action buttons for article interactions
+
+- **ZoniArticleCard** - Compact article card for article lists
+  - Featured image with fallback handling
+  - Author, date, and read time metadata
+  - Tag display with tap handling
+  - Responsive design for grid layouts
+  - Excerpt truncation with ellipsis
+
+- **ZoniMedia** - Media display component with multi-format support
+  - Image display with network and asset support
+  - Video player placeholder with controls
+  - Audio file display with playback controls
+  - Document preview with file type icons
+  - Loading and error state handling
+  - Customizable fit and border radius
+
+- **ZoniMediaGallery** - Media gallery for multiple items
+  - Grid layout with configurable columns
+  - Aspect ratio control for consistent sizing
+  - Interactive item selection
+  - Support for mixed media types
+
+#### Layout & Navigation Components
+- **ZoniHeader** - Header component for page titles and descriptions
+  - Background image and gradient support
+  - Action buttons integration
+  - Multiple text alignment options
+  - Customizable padding and height
+  - Optional divider display
+
+- **ZoniHeroHeader** - Large hero header with centered content
+  - Full-width background support
+  - Gradient overlay effects
+  - Call-to-action button integration
+  - Responsive height adjustment
+
+- **ZoniDrawer** - Navigation drawer with nested items
+  - Expandable menu sections
+  - Badge support for notifications
+  - Icon and text combinations
+  - Selected state management
+  - Custom header and footer support
+
+- **ZoniDrawerHeader** - Drawer header with user information
+  - Avatar and user details display
+  - Background image support
+  - Gradient backgrounds
+  - Interactive tap handling
+
+#### Input & Filter Components
+- **ZoniRangeSlider** - Range slider for value selection
+  - Dual thumb range selection
+  - Custom prefix and suffix support
+  - Division markers for discrete values
+  - Label display with formatting
+  - Color customization options
+
+- **ZoniPriceRangeSlider** - Specialized price range selector
+  - Currency symbol support
+  - Price formatting with divisions
+  - Min/max price display
+  - Interactive range adjustment
+
+- **ZoniDateRangeSlider** - Date range selection slider
+  - Date range visualization
+  - Min/max date constraints
+  - Formatted date display
+  - Smooth date range adjustment
+
+- **ZoniFilterBar** - Filter options display and management
+  - Multiple filter selection
+  - Count badges for filter options
+  - Clear all functionality
+  - Scrollable and wrap layouts
+  - Icon support for filters
+
+- **ZoniSearchFilterBar** - Combined search and filter interface
+  - Integrated search field
+  - Filter chips with counts
+  - Clear search functionality
+  - Responsive layout options
+
+#### Advanced Data Visualization Components
+- **ZoniChart** - Comprehensive chart component for data visualization
+  - Multiple chart types: line, bar, pie, area, donut
+  - Customizable series with colors and styling options
+  - Interactive legends and grid display
+  - Support for multiple data series
+  - Custom painters for efficient rendering
+- **ZoniDashboard** - Dashboard layout component for organizing widgets
+  - Multiple layout types: grid, masonry, list
+  - Drag-and-drop support for reordering items
+  - Customizable item sizing and constraints
+  - Loading, error, and empty state handling
+  - Scrollable and responsive layouts
+- **ZoniDataGrid** - Advanced data grid with enterprise features
+  - Column sorting and resizing capabilities
+  - Row selection (single and multiple modes)
+  - Custom cell and header builders
+  - Alternating row colors and hover effects
+  - Loading and empty state management
+  - Context menu support for rows
+
+#### Project Management Components
+- **ZoniKanban** - Kanban board component for project management
+  - Drag-and-drop cards between columns
+  - Customizable card and column styling
+  - Priority indicators and due date tracking
+  - Assignee avatars and tag support
+  - Collapsible columns and card limits
+  - Context menus for cards and columns
+- **ZoniCalendar** - Comprehensive calendar component
+  - Multiple view types: month, week, day, agenda
+  - Event management with colors and categories
+  - Holiday and weekend highlighting
+  - Multi-select date support
+  - Custom event and day builders
+  - Navigation and view switching controls
+
+#### Enhanced Input Components
+- **ZoniMultiSelect** - Multi-selection component with various display modes
+  - Multiple variants: dropdown, list, chips, modal
+  - Search and filtering capabilities
+  - Group-based organization of options
+  - Selection limits and validation
+  - Custom item and chip builders
+  - Select all and clear all functionality
+
+#### Business & Marketing Components
+- **ZoniStatsCard** - Statistics card component for displaying key metrics
+  - Trend indicators with up/down/neutral states
+  - Icon and color customization
+  - Subtitle and value formatting
+  - Interactive tap handling
+  - Responsive sizing options
+
+- **ZoniActivityFeed** - Activity feed component for chronological displays
+  - Timeline connector with customizable styling
+  - Avatar and icon support for activities
+  - Timestamp formatting with relative dates
+  - Empty state handling
+  - Interactive item selection
+
+- **ZoniNotificationPanel** - Notification panel with comprehensive features
+  - Multiple notification types: info, success, warning, error
+  - Read/unread state management
+  - Dismissible notifications with swipe gestures
+  - Batch operations: mark all read, clear all
+  - Timestamp display and formatting
+  - Custom notification actions
+
+- **ZoniUserProfile** - User profile component with multiple variants
+  - Card, compact, and detailed display modes
+  - Status indicators: online, away, busy, offline
+  - Badge system for achievements and roles
+  - Statistics display for user metrics
+  - Avatar support with fallback initials
+  - Custom action buttons
+
+- **ZoniPricingCard** - Pricing card component for subscription plans
+  - Popular and recommended plan highlighting
+  - Feature list with checkmark indicators
+  - Flexible pricing display with currency support
+  - Action buttons with custom styling
+  - Responsive grid layout support
+  - Mobile-optimized carousel view
+
+- **ZoniTestimonial** - Testimonial component for customer reviews
+  - Multiple variants: card, compact, featured
+  - Star rating display system
+  - Author information with avatar support
+  - Quote formatting with optional quote marks
+  - Carousel support for multiple testimonials
+  - Auto-play functionality with indicators
+
+- **ZoniFeatureShowcase** - Feature showcase component for product highlights
+  - Multiple layout options: grid, list, carousel
+  - Icon and image support for features
+  - Responsive design with configurable columns
+  - Interactive feature cards with tap handling
+  - Custom color theming per feature
+  - Mobile-optimized layouts
+
+- **ZoniColorPalette** - Color palette display component for showcasing design system colors
+  - Named constructors for primary, semantic, and neutral color palettes
+  - Hex value display with copy-to-clipboard functionality
+  - Hover effects and grid layout support
+- **ZoniCodeBlock** - Code block component for displaying syntax-highlighted code
+  - Dark and light theme variants
+  - Line numbers support and copy button functionality
+  - Horizontal scrolling and line truncation
+  - Language specification support
+- **ZoniStatusIndicator** - Status indicator component with multiple variants
+  - Status types: success, warning, error, info, neutral, processing
+  - Three size variants (small, medium, large)
+  - Animated processing state with pulse effect
+  - ZoniStatusCard variant for richer status displays
+- **ZoniSection** - Section components for organizing content
+  - ZoniSection base component with title, description, and header actions
+  - ZoniGridSection for grid layouts
+  - ZoniListSection for vertical lists
+  - Card and minimal variants with customizable styling
+- **ZoniInfoCard** - Enhanced card component for displaying information
+  - Multiple variants: neutral, success, warning, error, info
+  - Named constructors for each variant
+  - Support for icons, descriptions, and trailing widgets
+- **ZoniFeatureCard** - Feature card component for showcasing features or services
+  - Support for icons or images
+  - Customizable aspect ratio and action buttons
+  - Responsive design with proper text overflow handling
+- **ZoniEmptyState** - Empty state components for no data scenarios
+  - Named constructors for common scenarios: noData, noResults, error, offline
+  - ZoniEmptyList and ZoniEmptySearch specialized variants
+  - Support for custom illustrations and action buttons
+- **ZoniSkeleton** - Skeleton loader components for loading states
+  - Multiple variants: circle, rectangle, text
+  - Animated shimmer effect with customizable colors
+  - Pre-built components: ZoniSkeletonListItem, ZoniSkeletonCard, ZoniSkeletonParagraph
+- **ZoniMetricCard** - Metric display components for KPIs and analytics
+  - Trend indicators with up/down/neutral states
+  - ZoniMetricGrid for grid layouts
+  - ZoniMetric and ZoniMetricRow for simple metric displays
+- **ZoniStack** - Enhanced layout components with positioning utilities
+  - ZoniPositioned with named constructors for common positions
+  - ZoniFlex with row/column variants
+  - ZoniWrap for responsive wrapping layouts
+- **ZoniForm** - Form wrapper component with validation and submission handling
+  - Form validation with GlobalKey<FormState>
+  - Auto-validation modes and change callbacks
+  - Customizable padding and submission handling
+- **ZoniFormSection** - Form section component for grouping related form fields
+  - Section titles and descriptions
+  - Collapsible sections with expand/collapse functionality
+  - Consistent spacing and styling
+- **ZoniFormField** - Form field wrapper with label and validation display
+  - Required field indicators
+  - Helper text and error message display
+  - Consistent field styling and spacing
+- **ZoniFormActions** - Form actions component for submit/cancel buttons
+  - Configurable button alignment (left, center, right, spaceBetween)
+  - Primary and secondary action buttons
+  - Responsive button layouts
+- **ZoniToggleGroup** - Toggle group component for single or multi-select options
+  - Generic type support for any data type
+  - Horizontal and vertical layout directions
+  - Multi-select and single-select modes
+  - Customizable spacing and styling
+- **ZoniRating** - Star rating component with interactive and read-only modes
+  - Half-rating support with allowHalfRating option
+  - Customizable star count and colors
+  - Interactive rating changes with callbacks
+  - Read-only display mode
+- **ZoniTagInput** - Tag input component for adding and removing tags
+  - Add tags with Enter key or custom delimiter
+  - Remove tags with backspace or tap
+  - Customizable tag styling and colors
+  - Input validation and callbacks
+- **ZoniTimeline** - Timeline component for displaying chronological events
+  - Vertical and horizontal timeline layouts
+  - Customizable indicators with completion states
+  - Active item highlighting and custom colors
+  - Support for custom indicator widgets
+
+### Enhanced
+
+- Updated example app with comprehensive design system component showcase
+- Added new component exports to main library file
+
 ## [0.2.0] - 2024-10-27
 
 ### Added

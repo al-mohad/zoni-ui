@@ -1,91 +1,147 @@
 import 'package:flutter/material.dart';
+
+import '../../constants/zoni_constants.dart';
 import '../../theme/zoni_colors.dart';
+import '../../theme/zoni_text_styles.dart';
 
 /// Enum for sidebar position.
 enum ZoniSidebarPosition {
   /// Left side of the screen.
   left,
+
   /// Right side of the screen.
   right,
 }
 
 /// Enum for sidebar behavior.
 enum ZoniSidebarBehavior {
-  /// Sidebar pushes content.
+  /// Sidebar pushes content when opened.
   push,
-  /// Sidebar overlays content.
+
+  /// Sidebar overlays content when opened.
   overlay,
+
+  /// Sidebar is always visible (persistent).
+  persistent,
 }
 
-/// A sidebar item.
+/// Represents a menu item in the sidebar.
 class ZoniSidebarItem {
-  /// Creates a sidebar item.
+  /// Creates a sidebar menu item.
   const ZoniSidebarItem({
-    required this.id,
+    required this.key,
     required this.title,
     this.icon,
-    this.children = const [],
+    this.trailing,
+    this.onTap,
+    this.children = const <ZoniSidebarItem>[],
     this.isExpanded = false,
     this.isSelected = false,
-    this.onTap,
+    this.badge,
+    this.enabled = true,
   });
 
-  /// Unique identifier for the item.
-  final String id;
+  /// Unique key for the menu item.
+  final String key;
 
-  /// Title of the item.
+  /// Title text for the menu item.
   final String title;
 
-  /// Icon for the item.
+  /// Leading icon for the menu item.
   final IconData? icon;
 
-  /// Child items for expandable items.
-  final List<ZoniSidebarItem> children;
+  /// Trailing widget for the menu item.
+  final Widget? trailing;
 
-  /// Whether the item is expanded.
-  final bool isExpanded;
-
-  /// Whether the item is selected.
-  final bool isSelected;
-
-  /// Callback when item is tapped.
+  /// Callback when the menu item is tapped.
   final VoidCallback? onTap;
 
-  /// Creates a copy of this item with the given fields replaced.
+  /// Child menu items for nested navigation.
+  final List<ZoniSidebarItem> children;
+
+  /// Whether the menu item is expanded (for items with children).
+  final bool isExpanded;
+
+  /// Whether the menu item is selected.
+  final bool isSelected;
+
+  /// Badge widget to show notifications or counts.
+  final Widget? badge;
+
+  /// Whether the menu item is enabled.
+  final bool enabled;
+
+  /// Creates a copy of this item with updated properties.
   ZoniSidebarItem copyWith({
-    String? id,
+    String? key,
     String? title,
     IconData? icon,
+    Widget? trailing,
+    VoidCallback? onTap,
     List<ZoniSidebarItem>? children,
     bool? isExpanded,
     bool? isSelected,
-    VoidCallback? onTap,
-  }) {
-    return ZoniSidebarItem(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      icon: icon ?? this.icon,
-      children: children ?? this.children,
-      isExpanded: isExpanded ?? this.isExpanded,
-      isSelected: isSelected ?? this.isSelected,
-      onTap: onTap ?? this.onTap,
-    );
-  }
+    Widget? badge,
+    bool? enabled,
+  }) =>
+      ZoniSidebarItem(
+        key: key ?? this.key,
+        title: title ?? this.title,
+        icon: icon ?? this.icon,
+        trailing: trailing ?? this.trailing,
+        onTap: onTap ?? this.onTap,
+        children: children ?? this.children,
+        isExpanded: isExpanded ?? this.isExpanded,
+        isSelected: isSelected ?? this.isSelected,
+        badge: badge ?? this.badge,
+        enabled: enabled ?? this.enabled,
+      );
 }
 
-/// A customizable sidebar widget.
+/// A collapsible sidebar navigation component following Zoni design system.
+///
+/// The [ZoniSidebar] widget provides a navigation sidebar with support for
+/// nested menus, collapsing, and responsive behavior.
+///
+/// Example usage:
+/// ```dart
+/// ZoniSidebar(
+///   items: [
+///     ZoniSidebarItem(
+///       key: 'dashboard',
+///       title: 'Dashboard',
+///       icon: Icons.dashboard,
+///       onTap: () => print('Dashboard tapped'),
+///     ),
+///     ZoniSidebarItem(
+///       key: 'users',
+///       title: 'Users',
+///       icon: Icons.people,
+///       children: [
+///         ZoniSidebarItem(
+///           key: 'all_users',
+///           title: 'All Users',
+///           onTap: () => print('All Users tapped'),
+///         ),
+///       ],
+///     ),
+///   ],
+/// )
+/// ```
 class ZoniSidebar extends StatefulWidget {
-  /// Creates a sidebar.
+  /// Creates a Zoni sidebar.
   const ZoniSidebar({
-    super.key,
     required this.items,
+    super.key,
     this.width = 280.0,
     this.collapsedWidth = 72.0,
     this.isCollapsed = false,
     this.position = ZoniSidebarPosition.left,
-    this.behavior = ZoniSidebarBehavior.push,
+    this.behavior = ZoniSidebarBehavior.persistent,
     this.onToggle,
     this.onItemTap,
+    this.header,
+    this.footer,
     this.backgroundColor,
     this.selectedColor,
     this.hoverColor,
@@ -101,16 +157,16 @@ class ZoniSidebar extends StatefulWidget {
     this.animationDuration = const Duration(milliseconds: 300),
   });
 
-  /// List of sidebar items.
+  /// List of sidebar menu items.
   final List<ZoniSidebarItem> items;
 
-  /// Width of the expanded sidebar.
+  /// Width of the sidebar when expanded.
   final double width;
 
-  /// Width of the collapsed sidebar.
+  /// Width of the sidebar when collapsed.
   final double collapsedWidth;
 
-  /// Whether the sidebar is collapsed.
+  /// Whether the sidebar is currently collapsed.
   final bool isCollapsed;
 
   /// Position of the sidebar.
@@ -119,28 +175,34 @@ class ZoniSidebar extends StatefulWidget {
   /// Behavior of the sidebar.
   final ZoniSidebarBehavior behavior;
 
-  /// Callback when toggle button is pressed.
+  /// Callback when the sidebar is toggled.
   final VoidCallback? onToggle;
 
-  /// Callback when an item is tapped.
+  /// Callback when a menu item is tapped.
   final void Function(ZoniSidebarItem item)? onItemTap;
+
+  /// Header widget for the sidebar.
+  final Widget? header;
+
+  /// Footer widget for the sidebar.
+  final Widget? footer;
 
   /// Background color of the sidebar.
   final Color? backgroundColor;
 
-  /// Color for selected items.
+  /// Color for selected menu items.
   final Color? selectedColor;
 
-  /// Color for hovered items.
+  /// Color for hovered menu items.
   final Color? hoverColor;
 
-  /// Text color.
+  /// Text color for menu items.
   final Color? textColor;
 
-  /// Icon color.
+  /// Icon color for menu items.
   final Color? iconColor;
 
-  /// Divider color.
+  /// Color for divider lines.
   final Color? dividerColor;
 
   /// Elevation of the sidebar.
@@ -155,10 +217,10 @@ class ZoniSidebar extends StatefulWidget {
   /// Icon for the toggle button.
   final IconData toggleIcon;
 
-  /// Icon for collapse button.
+  /// Icon for collapsing the sidebar.
   final IconData collapseIcon;
 
-  /// Icon for expand button.
+  /// Icon for expanding the sidebar.
   final IconData expandIcon;
 
   /// Animation duration for expand/collapse.
@@ -182,37 +244,38 @@ class _ZoniSidebarState extends State<ZoniSidebar>
       duration: widget.animationDuration,
       vsync: this,
     );
-    _widthAnimation = Tween<double>(
-      begin: widget.isCollapsed ? widget.collapsedWidth : widget.width,
-      end: widget.isCollapsed ? widget.collapsedWidth : widget.width,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _updateAnimation();
+    if (widget.isCollapsed) {
+      _animationController.value = 1.0;
+    }
   }
 
   @override
   void didUpdateWidget(ZoniSidebar oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.isCollapsed != widget.isCollapsed) {
-      _updateAnimation();
+    if (widget.isCollapsed != oldWidget.isCollapsed) {
+      if (widget.isCollapsed) {
+        _animationController.forward();
+      } else {
+        _animationController.reverse();
+      }
     }
-    if (oldWidget.items != widget.items) {
-      setState(() {
-        _items = List.from(widget.items);
-      });
+    if (widget.items != oldWidget.items) {
+      _items = List.from(widget.items);
     }
+    _updateAnimation();
   }
 
   void _updateAnimation() {
     _widthAnimation = Tween<double>(
-      begin: _widthAnimation.value,
-      end: widget.isCollapsed ? widget.collapsedWidth : widget.width,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
-    _animationController.forward(from: 0);
+      begin: widget.width,
+      end: widget.collapsedWidth,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
   }
 
   @override
@@ -222,139 +285,181 @@ class _ZoniSidebarState extends State<ZoniSidebar>
   }
 
   Color get _backgroundColor => widget.backgroundColor ?? ZoniColors.surface;
-  Color get _selectedColor => widget.selectedColor ?? ZoniColors.primary.withValues(alpha: 0.1);
+  Color get _selectedColor =>
+      widget.selectedColor ?? ZoniColors.primary.withValues(alpha: 0.1);
   Color get _hoverColor => widget.hoverColor ?? ZoniColors.surfaceVariant;
   Color get _textColor => widget.textColor ?? ZoniColors.onSurface;
   Color get _iconColor => widget.iconColor ?? ZoniColors.onSurfaceVariant;
   Color get _dividerColor => widget.dividerColor ?? ZoniColors.outline;
 
   void _handleItemTap(ZoniSidebarItem item) {
+    if (!item.enabled) return;
+
     if (item.children.isNotEmpty) {
       setState(() {
-        final index = _items.indexWhere((i) => i.id == item.id);
+        final int index =
+            _items.indexWhere((ZoniSidebarItem i) => i.key == item.key);
         if (index != -1) {
           _items[index] = item.copyWith(isExpanded: !item.isExpanded);
         }
       });
     } else {
+      // Update selection state
+      setState(() {
+        _items = _items
+            .map(
+              (ZoniSidebarItem i) => i.copyWith(isSelected: i.key == item.key),
+            )
+            .toList();
+      });
+      item.onTap?.call();
       widget.onItemTap?.call(item);
     }
   }
 
-  Widget _buildItem(ZoniSidebarItem item, {int level = 0}) {
-    final isCollapsed = widget.isCollapsed;
-    final hasChildren = item.children.isNotEmpty;
-    final showChildren = hasChildren && item.isExpanded && !isCollapsed;
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+        animation: _widthAnimation,
+        builder: (BuildContext context, Widget? child) {
+          final bool isCollapsed = _animationController.value > 0.5;
+
+          return Material(
+            elevation: widget.elevation,
+            borderRadius: widget.borderRadius,
+            color: _backgroundColor,
+            child: SizedBox(
+              width: _widthAnimation.value,
+              child: Column(
+                children: <Widget>[
+                  if (widget.header != null) _buildHeader(isCollapsed),
+                  if (widget.showToggleButton) _buildToggleButton(isCollapsed),
+                  Expanded(
+                    child: ListView(
+                      padding:
+                          const EdgeInsets.symmetric(vertical: ZoniSpacing.sm),
+                      children: _items
+                          .map(
+                            (ZoniSidebarItem item) =>
+                                _buildMenuItem(item, isCollapsed),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                  if (widget.footer != null) _buildFooter(isCollapsed),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+
+  Widget _buildHeader(bool isCollapsed) => Container(
+        padding: const EdgeInsets.all(ZoniSpacing.md),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: _dividerColor),
+          ),
+        ),
+        child: isCollapsed ? const SizedBox.shrink() : widget.header!,
+      );
+
+  Widget _buildToggleButton(bool isCollapsed) => Container(
+        padding: const EdgeInsets.all(ZoniSpacing.sm),
+        child: Align(
+          alignment: widget.position == ZoniSidebarPosition.left
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: IconButton(
+            icon: Icon(
+              isCollapsed ? widget.expandIcon : widget.collapseIcon,
+              color: _iconColor,
+            ),
+            onPressed: widget.onToggle,
+            tooltip: isCollapsed ? 'Expand sidebar' : 'Collapse sidebar',
+          ),
+        ),
+      );
+
+  Widget _buildFooter(bool isCollapsed) => Container(
+        padding: const EdgeInsets.all(ZoniSpacing.md),
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: _dividerColor),
+          ),
+        ),
+        child: isCollapsed ? const SizedBox.shrink() : widget.footer!,
+      );
+
+  Widget _buildMenuItem(
+    ZoniSidebarItem item,
+    bool isCollapsed, {
+    int level = 0,
+  }) {
+    final bool hasChildren = item.children.isNotEmpty;
+    final double leftPadding = ZoniSpacing.md + (level * ZoniSpacing.lg);
 
     return Column(
-      children: [
+      children: <Widget>[
         Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: () => _handleItemTap(item),
             child: Container(
               padding: EdgeInsets.only(
-                left: 16.0 + (level * 16.0),
-                right: 16.0,
-                top: 12.0,
-                bottom: 12.0,
+                left: isCollapsed ? ZoniSpacing.sm : leftPadding,
+                right: ZoniSpacing.md,
+                top: ZoniSpacing.sm,
+                bottom: ZoniSpacing.sm,
               ),
               decoration: BoxDecoration(
                 color: item.isSelected ? _selectedColor : null,
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(ZoniBorderRadius.sm),
+                ),
               ),
               child: Row(
-                children: [
-                  if (item.icon != null) ...[
+                children: <Widget>[
+                  if (item.icon != null)
                     Icon(
                       item.icon,
-                      color: _iconColor,
-                      size: 20.0,
+                      color: item.isSelected ? ZoniColors.primary : _iconColor,
+                      size: 20,
                     ),
-                    if (!isCollapsed) const SizedBox(width: 12.0),
-                  ],
-                  if (!isCollapsed) ...[
+                  if (!isCollapsed) ...<Widget>[
+                    const SizedBox(width: ZoniSpacing.md),
                     Expanded(
                       child: Text(
                         item.title,
-                        style: TextStyle(
-                          color: _textColor,
-                          fontSize: 14.0,
-                          fontWeight: item.isSelected ? FontWeight.w600 : FontWeight.w400,
+                        style: ZoniTextStyles.bodyMedium.copyWith(
+                          color:
+                              item.isSelected ? ZoniColors.primary : _textColor,
+                          fontWeight: item.isSelected
+                              ? FontWeight.w600
+                              : FontWeight.normal,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    if (item.badge != null) item.badge!,
                     if (hasChildren)
                       Icon(
                         item.isExpanded ? Icons.expand_less : Icons.expand_more,
                         color: _iconColor,
-                        size: 20.0,
+                        size: 20,
                       ),
+                    if (item.trailing != null) item.trailing!,
                   ],
                 ],
               ),
             ),
           ),
         ),
-        if (showChildren)
-          ...item.children.map((child) => _buildItem(child, level: level + 1)),
-      ],
-    );
-  }
-
-  Widget _buildToggleButton() {
-    if (!widget.showToggleButton) return const SizedBox.shrink();
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: IconButton(
-        onPressed: widget.onToggle,
-        icon: Icon(
-          widget.isCollapsed ? widget.expandIcon : widget.collapseIcon,
-          color: _iconColor,
-        ),
-        tooltip: widget.isCollapsed ? 'Expand sidebar' : 'Collapse sidebar',
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _widthAnimation,
-      builder: (context, child) {
-        return Material(
-          elevation: widget.elevation,
-          borderRadius: widget.borderRadius,
-          child: Container(
-            width: _widthAnimation.value,
-            decoration: BoxDecoration(
-              color: _backgroundColor,
-              borderRadius: widget.borderRadius,
-            ),
-            child: Column(
-              children: [
-                _buildToggleButton(),
-                if (!widget.isCollapsed)
-                  Divider(
-                    color: _dividerColor,
-                    height: 1,
-                    thickness: 1,
-                  ),
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 8.0,
-                    ),
-                    children: _items.map((item) => _buildItem(item)).toList(),
-                  ),
-                ),
-              ],
-            ),
+        if (hasChildren && item.isExpanded && !isCollapsed)
+          ...item.children.map(
+            (ZoniSidebarItem child) =>
+                _buildMenuItem(child, isCollapsed, level: level + 1),
           ),
-        );
-      },
+      ],
     );
   }
 }
