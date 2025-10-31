@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2025-10-31
+
+### Changed
+- **Color System Improvements** - Replaced Material colors with Zoni brand colors
+  - Updated file upload widget to use Zoni colors for file type icons
+  - Updated media widget to use Zoni colors for document type icons
+  - Maintained visual distinction while ensuring brand consistency
+  - Images and Excel files now use `ZoniColors.freshGreen`
+  - PDFs and videos now use `ZoniColors.error`
+  - Word documents and audio files now use `ZoniColors.primary`
+  - PowerPoint files now use `ZoniColors.warning`
+  - Default/unknown files now use `ZoniColors.neutralGray`
+
+### Fixed
+- Fixed pubspec.yaml issue tracker URL (removed `.git` suffix)
+- Removed unused variables in accordion and skeleton widgets
+- Improved static analysis compliance
+
 ## [0.3.0] - 2025-10-30
 
 ### Added
