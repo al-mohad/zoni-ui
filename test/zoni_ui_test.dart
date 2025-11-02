@@ -5,15 +5,15 @@ import 'package:zoni_ui/zoni_ui.dart';
 void main() {
   group('ZoniColors', () {
     test('should have consistent primary color values', () {
-      expect(ZoniColors.primary, const Color(0xFF007BFF)); // Zoni Blue
+      expect(ZoniColors.primary, const Color(0xFF28A745)); // Fresh Green
       expect(
         ZoniColors.primaryVariant,
-        const Color(0xFF339CFF),
-      ); // Zoni Blue Tint
+        const Color(0xFF1C6C2E),
+      ); // Fresh Green Dark
       expect(
         ZoniColors.primaryLight,
-        const Color(0xFF339CFF),
-      ); // Zoni Blue Tint
+        const Color(0xFF28A745),
+      ); // Fresh Green
       expect(
         ZoniColors.primaryDark,
         const Color(0xFF1C6C2E),
@@ -24,7 +24,7 @@ void main() {
       expect(ZoniColors.success, const Color(0xFF28A745)); // Fresh Green
       expect(ZoniColors.warning, const Color(0xFFFD7E14)); // Warm Orange
       expect(ZoniColors.error, const Color(0xFFD55500)); // Warm Orange Shade
-      expect(ZoniColors.info, const Color(0xFF007BFF)); // Zoni Blue
+      expect(ZoniColors.info, const Color(0xFF28A745)); // Fresh Green
     });
 
     test('should have consistent surface color values', () {

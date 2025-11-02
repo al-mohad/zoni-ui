@@ -40,14 +40,14 @@ class ZoniColors {
   static const Color freshGreenDark = Color(0xFF1C6C2E);
 
   // Semantic Colors - Using core palette colors for consistency
-  /// Primary color: Zoni Blue
-  static const Color primary = zoniBlue;
+  /// Primary color: Fresh Green
+  static const Color primary = freshGreen;
 
-  /// Primary variant color: Zoni Blue Tint
-  static const Color primaryVariant = zoniBlueTint;
+  /// Primary variant color: Fresh Green Dark
+  static const Color primaryVariant = freshGreenDark;
 
-  /// Light primary color: Zoni Blue Tint
-  static const Color primaryLight = zoniBlueTint;
+  /// Light primary color: Fresh Green
+  static const Color primaryLight = freshGreen;
 
   /// Dark primary color: Fresh Green Dark
   static const Color primaryDark = freshGreenDark;
@@ -87,11 +87,11 @@ class ZoniColors {
   /// Error dark color: Deep Black
   static const Color errorDark = deepBlack;
 
-  /// Info color: Zoni Blue
-  static const Color info = zoniBlue;
+  /// Info color: Fresh Green
+  static const Color info = freshGreen;
 
-  /// Info light color: Zoni Blue Tint
-  static const Color infoLight = zoniBlueTint;
+  /// Info light color: Fresh Green
+  static const Color infoLight = freshGreen;
 
   /// Info dark color: Fresh Green Dark
   static const Color infoDark = freshGreenDark;

@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2025-11-02
+
+### Changed
+- **Primary Color Migration** - Changed primary color from Zoni Blue to Fresh Green
+  - Updated `ZoniColors.primary` from `zoniBlue` (#007BFF) to `freshGreen` (#28A745)
+  - Updated `ZoniColors.primaryVariant` from `zoniBlueTint` to `freshGreenDark`
+  - Updated `ZoniColors.primaryLight` from `zoniBlueTint` to `freshGreen`
+  - Updated `ZoniColors.info` from `zoniBlue` to `freshGreen`
+  - Updated `ZoniColors.infoLight` from `zoniBlueTint` to `freshGreen`
+  - All widgets now use Fresh Green as their primary color while maintaining semantic colors
+  - Updated tests to reflect new primary color expectations
+
+### Fixed
+- Updated test expectations to match new primary color values
+
 ## [0.3.1] - 2025-10-31
 
 ### Changed

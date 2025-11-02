@@ -1,6 +1,6 @@
 name: zoni_ui
 description: A comprehensive Flutter design system providing themes, components, and utilities for building consistent Zoni applications.
-version: 0.3.1
+version: 0.3.2
 homepage: https://github.com/al-mohad/zoni-ui.git
 repository: https://github.com/al-mohad/zoni-ui.git
 issue_tracker: https://github.com/al-mohad/zoni-ui/issues
