@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.3] - 2025-11-02
+
+### Changed
+- **Brand Color Update** - Updated to official Zoni brand colors
+  - Updated `ZoniColors.primary` from Fresh Green (#28A745) to Teal Green (#00A08D)
+  - Added `ZoniColors.primaryLight` (#33B5A5) for hover states
+  - Updated `ZoniColors.primaryDark` to (#008075) for active states
+  - Updated `ZoniColors.success` to (#10B981)
+  - Updated `ZoniColors.warning` to (#F59E0B)
+  - Updated `ZoniColors.error` to (#EF4444)
+  - Added `ZoniColors.accent` (#FF6B35)
+  - All widgets now use the new Teal Green as their primary color
+  - Legacy colors (zoniBlue, freshGreen, warmOrange) kept for backward compatibility
+  - Updated file type icons in file upload and media widgets to use new semantic colors
+  - Updated color palette widget to showcase new primary colors
+  - Updated tests to reflect new brand color values
+
 ## [0.3.2] - 2025-11-02
 
 ### Changed

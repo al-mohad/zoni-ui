@@ -496,12 +496,12 @@ class _ZoniFileUploadState extends State<ZoniFileUpload> {
   }
 
   Color _getFileIconColor(String mimeType) {
-    if (mimeType.startsWith('image/')) return ZoniColors.freshGreen;
+    if (mimeType.startsWith('image/')) return ZoniColors.success;
     if (mimeType.startsWith('video/')) return ZoniColors.error;
     if (mimeType.startsWith('audio/')) return ZoniColors.primary;
     if (mimeType.contains('pdf')) return ZoniColors.error;
     if (mimeType.contains('word')) return ZoniColors.primary;
-    if (mimeType.contains('excel')) return ZoniColors.freshGreen;
+    if (mimeType.contains('excel')) return ZoniColors.success;
     if (mimeType.contains('powerpoint')) return ZoniColors.warning;
     return ZoniColors.neutralGray;
   }

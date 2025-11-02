@@ -52,10 +52,10 @@ class ZoniColorPalette extends StatelessWidget {
     this.itemSpacing = 8.0,
     this.crossAxisCount = 2,
   }) : colors = const [
-          ZoniColorInfo('Zoni Blue', ZoniColors.zoniBlue),
-          ZoniColorInfo('Zoni Blue Tint', ZoniColors.zoniBlueTint),
-          ZoniColorInfo('Fresh Green', ZoniColors.freshGreen),
-          ZoniColorInfo('Fresh Green Dark', ZoniColors.freshGreenDark),
+          ZoniColorInfo('Primary', ZoniColors.primary),
+          ZoniColorInfo('Primary Light', ZoniColors.primaryLight),
+          ZoniColorInfo('Primary Dark', ZoniColors.primaryDark),
+          ZoniColorInfo('Accent', ZoniColors.accent),
         ];
 
   /// Creates a palette with semantic colors.

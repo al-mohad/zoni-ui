@@ -251,7 +251,7 @@ class ZoniMedia extends StatelessWidget {
       case 'xls':
       case 'xlsx':
         icon = Icons.table_chart;
-        iconColor = ZoniColors.freshGreen;
+        iconColor = ZoniColors.success;
         break;
       case 'ppt':
       case 'pptx':
