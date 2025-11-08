@@ -1,7 +1,5 @@
 {
-  "cSpell.words": [
-    "Zoni"
-  ],
+  "cSpell.words": ["Zoni"],
   "[dart]": {
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
@@ -11,9 +9,7 @@
     "editor.inlayHints.enabled": "offUnlessPressed",
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.rulers": [
-      80
-    ],
+    "editor.rulers": [80],
     "editor.selectionHighlight": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
@@ -22,5 +18,41 @@
     "editor.codeActionsOnSave": {
       "source.organizeImports": "never"
     }
-  }
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/CVS": true,
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/.husky": true,
+    "**/drizzle": true,
+    "**/dist": true,
+    "**/.todo.md": true,
+    "**/.vscode": true,
+    "**/.eslintrc.cjs": true,
+    "**/.editorconfig": true,
+    "**/.gitignore": false,
+    "**/.lintstagedrc.mjs": true,
+    "**/.markdownlint.json": true,
+    "**/.markdownlintignore": true,
+    "**/.prettierignore": true,
+    "**/bun.lockb": true,
+    "**/cspell.json": true,
+    "**/package-lock.json": true,
+    "**/pnpm-lock.yaml": true,
+    "**/next-env.d.ts": true,
+    "**/postcss.config.cjs": true,
+    "**/prettier.config.js": true,
+    "**/README.md": true,
+    "**/next.config.js": true,
+    "**/tailwind.config.ts": true,
+    "**/drizzle.config.ts": true,
+    "**/migrate.ts": true,
+    "**/.env.example": true
+  },
+  "explorerExclude.backup": {}
 }
