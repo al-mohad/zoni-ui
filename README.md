@@ -194,9 +194,87 @@ ZoniBorderRadius.lg    // 12px
 ZoniBorderRadius.xl    // 16px
 ```
 
-## Examples
+## Examples & Documentation
 
-Check out the `/example` folder for complete examples showing how to use Zoni UI components in real applications.
+### 📱 Example App
+
+The example app demonstrates all ZoniUI components with interactive examples:
+
+```bash
+cd example
+flutter pub get
+flutter run
+```
+
+**Features:**
+- **Comprehensive Component Showcase**: All buttons, inputs, cards, and advanced components
+- **Interactive Controls**: Real-time component state changes and configuration
+- **Theme Switching**: Toggle between light and dark themes
+- **Form Validation**: Complete form examples with validation
+- **Responsive Design**: Works on mobile, tablet, and desktop
+
+**Available Demo Apps:**
+- `flutter run lib/main.dart` - Complete component showcase
+- `flutter run lib/standalone_button_demo.dart` - Button-focused demo
+- `flutter run lib/standalone_input_demo.dart` - Input field demo
+
+### 📚 Widgetbook (Component Catalog)
+
+Browse and test components in isolation using Widgetbook:
+
+```bash
+cd widgetbook
+flutter pub get
+flutter run
+```
+
+**Features:**
+- **Component Catalog**: Browse all components organized by category
+- **Multiple Themes**: Instant light/dark theme switching
+- **Device Frames**: Preview on iPhone, Android, and other devices
+- **Text Scaling**: Test accessibility with different text scales
+- **Interactive Controls**: Modify component properties in real-time
+
+**Categories:**
+- Layout & Headers
+- Navigation Components
+- Media & Content
+- Input & Filter Components
+- Core UI Components
+
+### 🚀 Quick Start Examples
+
+**Basic Button:**
+```dart
+ZoniButton(
+  onPressed: () => print('Pressed!'),
+  child: Text('Click Me'),
+)
+```
+
+**Enhanced Text Field:**
+```dart
+ZoniTextField(
+  decoration: ZoniInputDecoration(
+    labelText: 'Email',
+    hintText: 'Enter your email',
+    prefixIcon: Icon(Icons.email),
+  ),
+  variant: ZoniInputVariant.outlined,
+  enableHapticFeedback: true,
+  keyboardType: TextInputType.emailAddress,
+)
+```
+
+**Loading Button:**
+```dart
+ZoniButton(
+  onPressed: _handleSubmit,
+  isLoading: _isSubmitting,
+  loadingType: ZoniButtonLoadingType.circular,
+  child: Text('Submit'),
+)
+```
 
 ## Contributing
 

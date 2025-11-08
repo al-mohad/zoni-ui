@@ -1,32 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../constants/zoni_constants.dart';
 import '../../theme/zoni_colors.dart';
 import '../../theme/zoni_text_styles.dart';
+import '../../utils/zoni_animations.dart';
+import '../../utils/zoni_haptics.dart';
+import '../../utils/zoni_input_utils.dart';
 
-/// Enum for search field variants.
-enum ZoniSearchFieldVariant {
-  /// Standard search field with default styling.
-  standard,
+/// Search field variants for the Zoni design system.
+///
+/// This is an alias for [ZoniInputVariant] to maintain backward compatibility.
+typedef ZoniSearchFieldVariant = ZoniInputVariant;
 
-  /// Outlined search field with border.
-  outlined,
-
-  /// Filled search field with background color.
-  filled,
-}
-
-/// Enum for search field size.
-enum ZoniSearchFieldSize {
-  /// Small search field.
-  small,
-
-  /// Medium search field.
-  medium,
-
-  /// Large search field.
-  large,
-}
+/// Search field size variants for the Zoni design system.
+///
+/// This is an alias for [ZoniInputSize] to maintain backward compatibility.
+typedef ZoniSearchFieldSize = ZoniInputSize;
 
 /// Represents a search suggestion.
 class ZoniSearchSuggestion {
@@ -82,6 +72,10 @@ class ZoniSearchField extends StatefulWidget {
     super.key,
     this.controller,
     this.focusNode,
+    this.decoration,
+    this.variant = ZoniSearchFieldVariant.outlined,
+    this.size = ZoniSearchFieldSize.medium,
+    // Backward compatibility parameters
     this.initialValue,
     this.hintText,
     this.labelText,
@@ -89,8 +83,6 @@ class ZoniSearchField extends StatefulWidget {
     this.errorText,
     this.prefixIcon,
     this.suffixIcon,
-    this.variant = ZoniSearchFieldVariant.outlined,
-    this.size = ZoniSearchFieldSize.medium,
     this.enabled = true,
     this.readOnly = false,
     this.autofocus = false,
@@ -98,7 +90,7 @@ class ZoniSearchField extends StatefulWidget {
     this.enableSuggestions = true,
     this.showClearButton = true,
     this.showSearchIcon = true,
-    this.suggestions = const [],
+    this.suggestions = const <ZoniSearchSuggestion>[],
     this.maxSuggestions = 5,
     this.suggestionBuilder,
     this.onSearch,
@@ -138,6 +130,11 @@ class ZoniSearchField extends StatefulWidget {
 
   /// Focus node for the field.
   final FocusNode? focusNode;
+
+  /// The decoration configuration for the search field.
+  ///
+  /// If null, a default decoration will be created based on the variant and size.
+  final ZoniInputDecoration? decoration;
 
   /// Initial value for the field.
   final String? initialValue;
@@ -194,7 +191,8 @@ class ZoniSearchField extends StatefulWidget {
   final int maxSuggestions;
 
   /// Builder for custom suggestion items.
-  final Widget Function(BuildContext context, ZoniSearchSuggestion suggestion)? suggestionBuilder;
+  final Widget Function(BuildContext context, ZoniSearchSuggestion suggestion)?
+      suggestionBuilder;
 
   /// Callback when search is performed.
   final void Function(String query)? onSearch;
@@ -288,6 +286,86 @@ class ZoniSearchField extends StatefulWidget {
 
   @override
   State<ZoniSearchField> createState() => _ZoniSearchFieldState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty<TextEditingController?>('controller', controller));
+    properties.add(DiagnosticsProperty<FocusNode?>('focusNode', focusNode));
+    properties.add(
+        DiagnosticsProperty<ZoniInputDecoration?>('decoration', decoration));
+    properties.add(StringProperty('initialValue', initialValue));
+    properties.add(StringProperty('hintText', hintText));
+    properties.add(StringProperty('labelText', labelText));
+    properties.add(StringProperty('helperText', helperText));
+    properties.add(StringProperty('errorText', errorText));
+    properties.add(EnumProperty<ZoniSearchFieldVariant>('variant', variant));
+    properties.add(EnumProperty<ZoniSearchFieldSize>('size', size));
+    properties.add(DiagnosticsProperty<bool>('enabled', enabled));
+    properties.add(DiagnosticsProperty<bool>('readOnly', readOnly));
+    properties.add(DiagnosticsProperty<bool>('autofocus', autofocus));
+    properties.add(DiagnosticsProperty<bool>('autocorrect', autocorrect));
+    properties
+        .add(DiagnosticsProperty<bool>('enableSuggestions', enableSuggestions));
+    properties
+        .add(DiagnosticsProperty<bool>('showClearButton', showClearButton));
+    properties.add(DiagnosticsProperty<bool>('showSearchIcon', showSearchIcon));
+    properties.add(
+        IterableProperty<ZoniSearchSuggestion>('suggestions', suggestions));
+    properties.add(IntProperty('maxSuggestions', maxSuggestions));
+    properties.add(ObjectFlagProperty<
+            Widget Function(
+                BuildContext context, ZoniSearchSuggestion suggestion)?>.has(
+        'suggestionBuilder', suggestionBuilder));
+    properties.add(ObjectFlagProperty<void Function(String query)?>.has(
+        'onSearch', onSearch));
+    properties.add(
+        ObjectFlagProperty<void Function(ZoniSearchSuggestion suggestion)?>.has(
+            'onSuggestionSelected', onSuggestionSelected));
+    properties.add(ObjectFlagProperty<void Function(String value)?>.has(
+        'onChanged', onChanged));
+    properties.add(ObjectFlagProperty<void Function(String value)?>.has(
+        'onSubmitted', onSubmitted));
+    properties.add(ObjectFlagProperty<VoidCallback?>.has('onTap', onTap));
+    properties.add(ObjectFlagProperty<void Function(bool hasFocus)?>.has(
+        'onFocusChanged', onFocusChanged));
+    properties.add(ObjectFlagProperty<String? Function(String? p1)?>.has(
+        'validator', validator));
+    properties.add(IterableProperty<TextInputFormatter>(
+        'inputFormatters', inputFormatters));
+    properties.add(
+        EnumProperty<TextInputAction?>('textInputAction', textInputAction));
+    properties
+        .add(DiagnosticsProperty<TextInputType?>('keyboardType', keyboardType));
+    properties.add(EnumProperty<TextCapitalization>(
+        'textCapitalization', textCapitalization));
+    properties.add(EnumProperty<TextAlign>('textAlign', textAlign));
+    properties
+        .add(EnumProperty<TextDirection?>('textDirection', textDirection));
+    properties.add(IntProperty('maxLength', maxLength));
+    properties.add(IntProperty('maxLines', maxLines));
+    properties.add(IntProperty('minLines', minLines));
+    properties.add(DiagnosticsProperty<bool>('expands', expands));
+    properties.add(DoubleProperty('width', width));
+    properties.add(DoubleProperty('height', height));
+    properties
+        .add(DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius));
+    properties.add(ColorProperty('backgroundColor', backgroundColor));
+    properties.add(ColorProperty('borderColor', borderColor));
+    properties.add(ColorProperty('focusedBorderColor', focusedBorderColor));
+    properties.add(ColorProperty('errorBorderColor', errorBorderColor));
+    properties.add(DiagnosticsProperty<TextStyle?>('textStyle', textStyle));
+    properties.add(DiagnosticsProperty<TextStyle?>('hintStyle', hintStyle));
+    properties.add(DiagnosticsProperty<TextStyle?>('labelStyle', labelStyle));
+    properties.add(DiagnosticsProperty<TextStyle?>('helperStyle', helperStyle));
+    properties.add(DiagnosticsProperty<TextStyle?>('errorStyle', errorStyle));
+    properties
+        .add(DiagnosticsProperty<Duration>('debounceDelay', debounceDelay));
+  }
+
+  // Note: debugFillProperties temporarily removed due to import issues
+  // Will be restored in a future update with proper diagnostic imports
 }
 
 class _ZoniSearchFieldState extends State<ZoniSearchField> {
@@ -295,13 +373,14 @@ class _ZoniSearchFieldState extends State<ZoniSearchField> {
   late FocusNode _focusNode;
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
-  List<ZoniSearchSuggestion> _filteredSuggestions = [];
+  List<ZoniSearchSuggestion> _filteredSuggestions = <ZoniSearchSuggestion>[];
   bool _showSuggestions = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? TextEditingController(text: widget.initialValue);
+    _controller =
+        widget.controller ?? TextEditingController(text: widget.initialValue);
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(_onFocusChanged);
     _controller.addListener(_onTextChanged);
@@ -333,11 +412,11 @@ class _ZoniSearchFieldState extends State<ZoniSearchField> {
     if (widget.height != null) return widget.height!;
     switch (widget.size) {
       case ZoniSearchFieldSize.small:
-        return 40.0;
+        return 40;
       case ZoniSearchFieldSize.medium:
-        return 48.0;
+        return 48;
       case ZoniSearchFieldSize.large:
-        return 56.0;
+        return 56;
     }
   }
 
@@ -361,10 +440,9 @@ class _ZoniSearchFieldState extends State<ZoniSearchField> {
     }
   }
 
-  BorderRadius get _borderRadius {
-    return widget.borderRadius ??
-        const BorderRadius.all(Radius.circular(ZoniBorderRadius.sm));
-  }
+  BorderRadius get _borderRadius =>
+      widget.borderRadius ??
+      const BorderRadius.all(Radius.circular(ZoniBorderRadius.sm));
 
   InputBorder get _border {
     final Color borderColor = widget.borderColor ?? ZoniColors.outline;
@@ -439,7 +517,7 @@ class _ZoniSearchFieldState extends State<ZoniSearchField> {
   void _onFocusChanged() {
     final bool hasFocus = _focusNode.hasFocus;
     widget.onFocusChanged?.call(hasFocus);
-    
+
     if (hasFocus && _filteredSuggestions.isNotEmpty) {
       _showSuggestionsOverlay();
     } else {
@@ -456,7 +534,7 @@ class _ZoniSearchFieldState extends State<ZoniSearchField> {
   void _filterSuggestions(String query) {
     if (!widget.enableSuggestions || query.isEmpty) {
       setState(() {
-        _filteredSuggestions = [];
+        _filteredSuggestions = <ZoniSearchSuggestion>[];
         _showSuggestions = false;
       });
       _removeOverlay();
@@ -464,9 +542,16 @@ class _ZoniSearchFieldState extends State<ZoniSearchField> {
     }
 
     final List<ZoniSearchSuggestion> filtered = widget.suggestions
-        .where((suggestion) =>
-            suggestion.displayLabel.toLowerCase().contains(query.toLowerCase()) ||
-            (suggestion.subtitle?.toLowerCase().contains(query.toLowerCase()) ?? false))
+        .where(
+          (ZoniSearchSuggestion suggestion) =>
+              suggestion.displayLabel
+                  .toLowerCase()
+                  .contains(query.toLowerCase()) ||
+              (suggestion.subtitle
+                      ?.toLowerCase()
+                      .contains(query.toLowerCase()) ??
+                  false),
+        )
         .take(widget.maxSuggestions)
         .toList();
 
@@ -484,9 +569,9 @@ class _ZoniSearchFieldState extends State<ZoniSearchField> {
 
   void _showSuggestionsOverlay() {
     _removeOverlay();
-    
+
     _overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
+      builder: (BuildContext context) => Positioned(
         width: context.size?.width ?? 200,
         child: CompositedTransformFollower(
           link: _layerLink,
@@ -506,8 +591,9 @@ class _ZoniSearchFieldState extends State<ZoniSearchField> {
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 itemCount: _filteredSuggestions.length,
-                itemBuilder: (context, index) {
-                  final suggestion = _filteredSuggestions[index];
+                itemBuilder: (BuildContext context, int index) {
+                  final ZoniSearchSuggestion suggestion =
+                      _filteredSuggestions[index];
                   return _buildSuggestionItem(suggestion);
                 },
               ),
@@ -578,75 +664,77 @@ class _ZoniSearchFieldState extends State<ZoniSearchField> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: _layerLink,
-      child: SizedBox(
-        width: widget.width,
-        height: _fieldHeight,
-        child: TextFormField(
-          controller: _controller,
-          focusNode: _focusNode,
-          enabled: widget.enabled,
-          readOnly: widget.readOnly,
-          autofocus: widget.autofocus,
-          autocorrect: widget.autocorrect,
-          enableSuggestions: false, // We handle suggestions manually
-          validator: widget.validator,
-          inputFormatters: widget.inputFormatters,
-          textInputAction: widget.textInputAction ?? TextInputAction.search,
-          keyboardType: widget.keyboardType ?? TextInputType.text,
-          textCapitalization: widget.textCapitalization,
-          textAlign: widget.textAlign,
-          textDirection: widget.textDirection,
-          maxLength: widget.maxLength,
-          maxLines: widget.maxLines,
-          minLines: widget.minLines,
-          expands: widget.expands,
-          onTap: widget.onTap,
-          onChanged: widget.onChanged,
-          onFieldSubmitted: (value) {
-            widget.onSubmitted?.call(value);
-            _performSearch();
-          },
-          style: widget.textStyle ??
-              ZoniTextStyles.bodyMedium.copyWith(
-                color: widget.enabled ? ZoniColors.onSurface : ZoniColors.onSurface.withValues(alpha: 0.6),
-              ),
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-            hintText: widget.hintText ?? 'Search...',
-            helperText: widget.helperText,
-            errorText: widget.errorText,
-            prefixIcon: widget.prefixIcon ??
-                (widget.showSearchIcon
-                    ? Icon(
-                        Icons.search,
-                        color: widget.enabled ? ZoniColors.onSurfaceVariant : ZoniColors.onSurface.withValues(alpha: 0.4),
-                      )
-                    : null),
-            suffixIcon: widget.showClearButton && _controller.text.isNotEmpty
-                ? IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: widget.enabled ? _clearField : null,
-                    color: ZoniColors.onSurfaceVariant,
-                  )
-                : widget.suffixIcon,
-            filled: widget.variant == ZoniSearchFieldVariant.filled,
-            fillColor: _fillColor,
-            border: _border,
-            enabledBorder: _border,
-            focusedBorder: _focusedBorder,
-            errorBorder: _errorBorder,
-            focusedErrorBorder: _errorBorder,
-            contentPadding: _contentPadding,
-            labelStyle: widget.labelStyle,
-            hintStyle: widget.hintStyle,
-            helperStyle: widget.helperStyle,
-            errorStyle: widget.errorStyle,
+  Widget build(BuildContext context) => CompositedTransformTarget(
+        link: _layerLink,
+        child: SizedBox(
+          width: widget.width,
+          height: _fieldHeight,
+          child: TextFormField(
+            controller: _controller,
+            focusNode: _focusNode,
+            enabled: widget.enabled,
+            readOnly: widget.readOnly,
+            autofocus: widget.autofocus,
+            autocorrect: widget.autocorrect,
+            enableSuggestions: false, // We handle suggestions manually
+            validator: widget.validator,
+            inputFormatters: widget.inputFormatters,
+            textInputAction: widget.textInputAction ?? TextInputAction.search,
+            keyboardType: widget.keyboardType ?? TextInputType.text,
+            textCapitalization: widget.textCapitalization,
+            textAlign: widget.textAlign,
+            textDirection: widget.textDirection,
+            maxLength: widget.maxLength,
+            maxLines: widget.maxLines,
+            minLines: widget.minLines,
+            expands: widget.expands,
+            onTap: widget.onTap,
+            onChanged: widget.onChanged,
+            onFieldSubmitted: (String value) {
+              widget.onSubmitted?.call(value);
+              _performSearch();
+            },
+            style: widget.textStyle ??
+                ZoniTextStyles.bodyMedium.copyWith(
+                  color: widget.enabled
+                      ? ZoniColors.onSurface
+                      : ZoniColors.onSurface.withValues(alpha: 0.6),
+                ),
+            decoration: InputDecoration(
+              labelText: widget.labelText,
+              hintText: widget.hintText ?? 'Search...',
+              helperText: widget.helperText,
+              errorText: widget.errorText,
+              prefixIcon: widget.prefixIcon ??
+                  (widget.showSearchIcon
+                      ? Icon(
+                          Icons.search,
+                          color: widget.enabled
+                              ? ZoniColors.onSurfaceVariant
+                              : ZoniColors.onSurface.withValues(alpha: 0.4),
+                        )
+                      : null),
+              suffixIcon: widget.showClearButton && _controller.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: widget.enabled ? _clearField : null,
+                      color: ZoniColors.onSurfaceVariant,
+                    )
+                  : widget.suffixIcon,
+              filled: widget.variant == ZoniSearchFieldVariant.filled,
+              fillColor: _fillColor,
+              border: _border,
+              enabledBorder: _border,
+              focusedBorder: _focusedBorder,
+              errorBorder: _errorBorder,
+              focusedErrorBorder: _errorBorder,
+              contentPadding: _contentPadding,
+              labelStyle: widget.labelStyle,
+              hintStyle: widget.hintStyle,
+              helperStyle: widget.helperStyle,
+              errorStyle: widget.errorStyle,
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

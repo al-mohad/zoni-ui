@@ -163,6 +163,11 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                 ),
                 SizedBox(height: ZoniUI.spacing.xl),
                 _buildSection(
+                  'All Input Components',
+                  _buildAllInputComponentsExamples(),
+                ),
+                SizedBox(height: ZoniUI.spacing.xl),
+                _buildSection(
                   'Additional Components',
                   _buildAdditionalComponentsExamples(),
                 ),
@@ -352,6 +357,9 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
 
   Widget _buildTextFieldExamples() => Column(
         children: <Widget>[
+          // Text Fields
+          Text('Text Fields', style: ZoniUI.textStyles.titleMedium),
+          SizedBox(height: ZoniUI.spacing.sm),
           ZoniTextField(
             controller: _textController,
             label: 'Basic Text Field',
@@ -382,6 +390,43 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
           const ZoniTextField(
             label: 'Field with Error',
             errorText: 'This field has an error',
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Search Field
+          Text('Search Field', style: ZoniUI.textStyles.titleMedium),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniSearchField(
+            hintText: 'Search for items...',
+            onChanged: (value) => debugPrint('Search: $value'),
+            onSubmitted: (value) => debugPrint('Search submitted: $value'),
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Date and Time Pickers
+          Text('Date & Time Pickers', style: ZoniUI.textStyles.titleMedium),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniDatePicker(
+            label: 'Select Date',
+            onDateSelected: (date) => debugPrint('Date selected: $date'),
+          ),
+          SizedBox(height: ZoniUI.spacing.md),
+          ZoniTimePicker(
+            label: 'Select Time',
+            onTimeSelected: (time) => debugPrint('Time selected: $time'),
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // File Upload
+          Text('File Upload', style: ZoniUI.textStyles.titleMedium),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniFileUpload(
+            title: 'Upload Files',
+            subtitle: 'Select files to upload',
+            onFilesSelected: (files) =>
+                debugPrint('Files selected: ${files.length}'),
+            maxFiles: 5,
+            acceptedFileTypes: const ['jpg', 'png', 'pdf', 'doc'],
           ),
         ],
       );
@@ -642,6 +687,133 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                 ],
               ),
             ],
+          ),
+        ],
+      );
+
+  Widget _buildAllInputComponentsExamples() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // Multi-Select
+          Text('Multi-Select', style: ZoniUI.textStyles.titleMedium),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniMultiSelect<String>(
+            options: [
+              ZoniMultiSelectOption(value: 'flutter', label: 'Flutter'),
+              ZoniMultiSelectOption(value: 'dart', label: 'Dart'),
+              ZoniMultiSelectOption(value: 'ui', label: 'UI/UX'),
+              ZoniMultiSelectOption(value: 'design', label: 'Design'),
+            ],
+            selectedValues: const ['flutter'],
+            onChanged: (values) => debugPrint('Selected: $values'),
+            title: 'Select Technologies',
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Toggle Group
+          Text('Toggle Group', style: ZoniUI.textStyles.titleMedium),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniToggleGroup<String>(
+            options: [
+              ZoniToggleOption(
+                value: 'left',
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.format_align_left, size: 16),
+                    SizedBox(width: 4),
+                    Text('Left'),
+                  ],
+                ),
+              ),
+              ZoniToggleOption(
+                value: 'center',
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.format_align_center, size: 16),
+                    SizedBox(width: 4),
+                    Text('Center'),
+                  ],
+                ),
+              ),
+              ZoniToggleOption(
+                value: 'right',
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.format_align_right, size: 16),
+                    SizedBox(width: 4),
+                    Text('Right'),
+                  ],
+                ),
+              ),
+            ],
+            selectedValues: const ['left'],
+            onChanged: (values) => debugPrint('Toggle selected: $values'),
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Checkbox Examples
+          Text('Checkboxes', style: ZoniUI.textStyles.titleMedium),
+          SizedBox(height: ZoniUI.spacing.sm),
+          Column(
+            children: [
+              Row(
+                children: [
+                  ZoniCheckbox(
+                    value: _checkboxValue,
+                    onChanged: (value) =>
+                        setState(() => _checkboxValue = value ?? false),
+                  ),
+                  SizedBox(width: ZoniUI.spacing.sm),
+                  Text('Accept terms and conditions'),
+                ],
+              ),
+              SizedBox(height: ZoniUI.spacing.sm),
+              Row(
+                children: [
+                  ZoniCheckbox(
+                    value: !_checkboxValue,
+                    onChanged: (value) =>
+                        setState(() => _checkboxValue = !(value ?? true)),
+                    variant: ZoniCheckboxVariant.success,
+                  ),
+                  SizedBox(width: ZoniUI.spacing.sm),
+                  Text('Subscribe to newsletter'),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: ZoniUI.spacing.lg),
+
+          // Form Example
+          Text('Form Components', style: ZoniUI.textStyles.titleMedium),
+          SizedBox(height: ZoniUI.spacing.sm),
+          ZoniForm(
+            child: Column(
+              children: [
+                ZoniTextField(
+                  label: 'Full Name',
+                  hintText: 'Enter your full name',
+                  validator: (value) =>
+                      value?.isEmpty == true ? 'Name is required' : null,
+                ),
+                SizedBox(height: ZoniUI.spacing.md),
+                ZoniTextField(
+                  label: 'Email',
+                  hintText: 'Enter your email',
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) =>
+                      value?.contains('@') != true ? 'Invalid email' : null,
+                ),
+                SizedBox(height: ZoniUI.spacing.md),
+                ZoniButton(
+                  onPressed: () => debugPrint('Form submitted'),
+                  child: const Text('Submit'),
+                ),
+              ],
+            ),
           ),
         ],
       );

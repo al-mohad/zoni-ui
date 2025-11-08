@@ -6,13 +6,19 @@ library zoni_ui;
 
 // Core Design System
 export 'src/constants/zoni_constants.dart';
+export 'src/constants/zoni_double_constants.dart';
+export 'src/constants/zoni_int_constants.dart';
 export 'src/theme/zoni_colors.dart';
 export 'src/theme/zoni_text_styles.dart';
 export 'src/theme/zoni_theme.dart';
 // Utilities
+export 'src/utils/zoni_animations.dart';
+export 'src/utils/zoni_haptics.dart';
+export 'src/utils/zoni_input_utils.dart';
 export 'src/utils/zoni_logger.dart';
 // Widgets - Buttons
 export 'src/widgets/buttons/zoni_button.dart';
+export 'src/widgets/buttons/zoni_button_loading.dart';
 // Widgets - Cards
 export 'src/widgets/cards/zoni_card.dart';
 export 'src/widgets/cards/zoni_info_card.dart';

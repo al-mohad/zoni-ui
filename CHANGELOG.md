@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] - 2025-11-08
+
+### Added
+- **Enhanced Constants System** - Comprehensive redesign of numeric constants
+  - `ZoniDoubleConstants` - Organized double constants with semantic naming
+    - Spacing constants (spacing0, spacing4, spacing8, spacing16, etc.)
+    - Typography constants (lineHeightNormal, letterSpacingWide, etc.)
+    - Opacity constants (opacityLow, opacityMedium, opacityHigh, etc.)
+    - Border & radius constants (radiusSM, radiusMD, radiusLG, etc.)
+    - Animation constants (animationFast, animationNormal, animationSlow, etc.)
+    - Elevation constants (elevationLow, elevationMedium, elevationHigh, etc.)
+    - Size constants for icons, buttons, and inputs
+  - `ZoniIntConstants` - Organized integer constants with semantic naming
+    - Animation duration constants in milliseconds
+    - Grid & layout constants (gridColumnsMobile, gridColumnsTablet, etc.)
+    - Z-index constants for proper layering (zIndexModal, zIndexTooltip, etc.)
+    - Limits & counts (maxPageSize, maxCharsShort, maxFileSizeMB, etc.)
+    - Timing constants (debounceShort, toastTimeout, networkTimeout, etc.)
+    - Common numeric values and percentage constants
+  - Comprehensive documentation with usage examples for each category
+  - Backward compatibility maintained with deprecated legacy constants
+  - Export statements added to main library file
+
+### Improved
+- **Documentation** - Added extensive inline documentation for all constants
+  - Usage categories clearly defined for each constant type
+  - Code examples showing practical implementation
+  - Semantic naming conventions for better developer experience
+  - Deprecation notices for legacy constants with migration guidance
+
 ## [0.3.3] - 2025-11-02
 
 ### Changed

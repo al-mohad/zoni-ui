@@ -1,28 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/zoni_constants.dart';
 import '../../theme/zoni_colors.dart';
 import '../../theme/zoni_text_styles.dart';
+import '../../utils/zoni_input_utils.dart';
 
-/// Enum for dropdown sizes.
-enum ZoniDropdownSize {
-  /// Small dropdown size.
-  small,
-  /// Medium dropdown size.
-  medium,
-  /// Large dropdown size.
-  large,
-}
+/// Dropdown size variants for the Zoni design system.
+///
+/// This is an alias for [ZoniInputSize] to maintain backward compatibility.
+typedef ZoniDropdownSize = ZoniInputSize;
 
-/// Enum for dropdown variants.
-enum ZoniDropdownVariant {
-  /// Standard dropdown variant.
-  standard,
-  /// Outlined dropdown variant.
-  outlined,
-  /// Filled dropdown variant.
-  filled,
-}
+/// Dropdown variants for the Zoni design system.
+///
+/// This is an alias for [ZoniInputVariant] to maintain backward compatibility.
+typedef ZoniDropdownVariant = ZoniInputVariant;
 
 /// A dropdown widget that follows Zoni design system principles.
 class ZoniDropdown<T> extends StatelessWidget {
@@ -115,9 +107,9 @@ class ZoniDropdown<T> extends StatelessWidget {
     this.disabledBorder,
     this.fillColor,
     this.hoverColor,
-  }) : variant = ZoniDropdownVariant.outlined,
-       underline = const SizedBox(),
-       filled = false;
+  })  : variant = ZoniDropdownVariant.outlined,
+        underline = const SizedBox(),
+        filled = false;
 
   /// Creates a filled dropdown.
   const ZoniDropdown.filled({
@@ -161,9 +153,9 @@ class ZoniDropdown<T> extends StatelessWidget {
     this.disabledBorder,
     this.fillColor,
     this.hoverColor,
-  }) : variant = ZoniDropdownVariant.filled,
-       underline = const SizedBox(),
-       filled = true;
+  })  : variant = ZoniDropdownVariant.filled,
+        underline = const SizedBox(),
+        filled = true;
 
   /// The list of items the user can select.
   final List<DropdownMenuItem<T>>? items;
@@ -293,12 +285,13 @@ class ZoniDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isError = errorText != null;
-    final effectiveStyle = style ?? _getDefaultTextStyle();
-    final effectiveContentPadding = contentPadding ?? _getDefaultContentPadding();
+    final bool isError = errorText != null;
+    final TextStyle effectiveStyle = style ?? _getDefaultTextStyle();
+    final EdgeInsetsGeometry effectiveContentPadding =
+        contentPadding ?? _getDefaultContentPadding();
 
-    Widget dropdown = DropdownButtonFormField<T>(
-      value: value,
+    final Widget dropdown = DropdownButtonFormField<T>(
+      initialValue: value,
       items: items,
       onChanged: enabled ? onChanged : null,
       hint: hint,
@@ -306,7 +299,8 @@ class ZoniDropdown<T> extends StatelessWidget {
       elevation: elevation,
       style: effectiveStyle,
       icon: icon ?? _getDefaultIcon(),
-      iconDisabledColor: iconDisabledColor ?? ZoniColors.onSurface.withOpacity(0.3),
+      iconDisabledColor:
+          iconDisabledColor ?? ZoniColors.onSurface.withOpacity(0.3),
       iconEnabledColor: iconEnabledColor ?? ZoniColors.onSurface,
       iconSize: iconSize,
       isDense: isDense,
@@ -335,7 +329,8 @@ class ZoniDropdown<T> extends StatelessWidget {
         enabledBorder: enabledBorder ?? _getDefaultEnabledBorder(),
         focusedBorder: focusedBorder ?? _getDefaultFocusedBorder(),
         errorBorder: errorBorder ?? _getDefaultErrorBorder(),
-        focusedErrorBorder: focusedErrorBorder ?? _getDefaultFocusedErrorBorder(),
+        focusedErrorBorder:
+            focusedErrorBorder ?? _getDefaultFocusedErrorBorder(),
         disabledBorder: disabledBorder ?? _getDefaultDisabledBorder(),
         labelStyle: _getDefaultLabelStyle(),
         helperStyle: _getDefaultHelperStyle(),
@@ -346,12 +341,10 @@ class ZoniDropdown<T> extends StatelessWidget {
     return dropdown;
   }
 
-  Widget _getDefaultIcon() {
-    return Icon(
-      Icons.arrow_drop_down,
-      size: iconSize,
-    );
-  }
+  Widget _getDefaultIcon() => Icon(
+        Icons.arrow_drop_down,
+        size: iconSize,
+      );
 
   TextStyle _getDefaultTextStyle() {
     switch (size) {
@@ -386,9 +379,8 @@ class ZoniDropdown<T> extends StatelessWidget {
     }
   }
 
-  TextStyle _getDefaultErrorStyle() {
-    return _getDefaultHelperStyle().copyWith(color: ZoniColors.error);
-  }
+  TextStyle _getDefaultErrorStyle() =>
+      _getDefaultHelperStyle().copyWith(color: ZoniColors.error);
 
   EdgeInsetsGeometry _getDefaultContentPadding() {
     switch (size) {
@@ -428,7 +420,7 @@ class ZoniDropdown<T> extends StatelessWidget {
       case ZoniDropdownVariant.outlined:
         return OutlineInputBorder(
           borderRadius: BorderRadius.circular(ZoniBorderRadius.sm),
-          borderSide: BorderSide(color: ZoniColors.outline),
+          borderSide: const BorderSide(color: ZoniColors.outline),
         );
       case ZoniDropdownVariant.filled:
         return OutlineInputBorder(
@@ -441,13 +433,13 @@ class ZoniDropdown<T> extends StatelessWidget {
   InputBorder _getDefaultEnabledBorder() {
     switch (variant) {
       case ZoniDropdownVariant.standard:
-        return UnderlineInputBorder(
+        return const UnderlineInputBorder(
           borderSide: BorderSide(color: ZoniColors.outline),
         );
       case ZoniDropdownVariant.outlined:
         return OutlineInputBorder(
           borderRadius: BorderRadius.circular(ZoniBorderRadius.sm),
-          borderSide: BorderSide(color: ZoniColors.outline),
+          borderSide: const BorderSide(color: ZoniColors.outline),
         );
       case ZoniDropdownVariant.filled:
         return OutlineInputBorder(
@@ -460,18 +452,18 @@ class ZoniDropdown<T> extends StatelessWidget {
   InputBorder _getDefaultFocusedBorder() {
     switch (variant) {
       case ZoniDropdownVariant.standard:
-        return UnderlineInputBorder(
+        return const UnderlineInputBorder(
           borderSide: BorderSide(color: ZoniColors.primary, width: 2),
         );
       case ZoniDropdownVariant.outlined:
         return OutlineInputBorder(
           borderRadius: BorderRadius.circular(ZoniBorderRadius.sm),
-          borderSide: BorderSide(color: ZoniColors.primary, width: 2),
+          borderSide: const BorderSide(color: ZoniColors.primary, width: 2),
         );
       case ZoniDropdownVariant.filled:
         return OutlineInputBorder(
           borderRadius: BorderRadius.circular(ZoniBorderRadius.sm),
-          borderSide: BorderSide(color: ZoniColors.primary, width: 2),
+          borderSide: const BorderSide(color: ZoniColors.primary, width: 2),
         );
     }
   }
@@ -479,18 +471,18 @@ class ZoniDropdown<T> extends StatelessWidget {
   InputBorder _getDefaultErrorBorder() {
     switch (variant) {
       case ZoniDropdownVariant.standard:
-        return UnderlineInputBorder(
+        return const UnderlineInputBorder(
           borderSide: BorderSide(color: ZoniColors.error),
         );
       case ZoniDropdownVariant.outlined:
         return OutlineInputBorder(
           borderRadius: BorderRadius.circular(ZoniBorderRadius.sm),
-          borderSide: BorderSide(color: ZoniColors.error),
+          borderSide: const BorderSide(color: ZoniColors.error),
         );
       case ZoniDropdownVariant.filled:
         return OutlineInputBorder(
           borderRadius: BorderRadius.circular(ZoniBorderRadius.sm),
-          borderSide: BorderSide(color: ZoniColors.error),
+          borderSide: const BorderSide(color: ZoniColors.error),
         );
     }
   }
@@ -498,18 +490,18 @@ class ZoniDropdown<T> extends StatelessWidget {
   InputBorder _getDefaultFocusedErrorBorder() {
     switch (variant) {
       case ZoniDropdownVariant.standard:
-        return UnderlineInputBorder(
+        return const UnderlineInputBorder(
           borderSide: BorderSide(color: ZoniColors.error, width: 2),
         );
       case ZoniDropdownVariant.outlined:
         return OutlineInputBorder(
           borderRadius: BorderRadius.circular(ZoniBorderRadius.sm),
-          borderSide: BorderSide(color: ZoniColors.error, width: 2),
+          borderSide: const BorderSide(color: ZoniColors.error, width: 2),
         );
       case ZoniDropdownVariant.filled:
         return OutlineInputBorder(
           borderRadius: BorderRadius.circular(ZoniBorderRadius.sm),
-          borderSide: BorderSide(color: ZoniColors.error, width: 2),
+          borderSide: const BorderSide(color: ZoniColors.error, width: 2),
         );
     }
   }
@@ -531,5 +523,65 @@ class ZoniDropdown<T> extends StatelessWidget {
           borderSide: BorderSide.none,
         );
     }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(ObjectFlagProperty<ValueChanged<T?>?>.has('onChanged', onChanged));
+    properties.add(DiagnosticsProperty<T?>('value', value));
+    properties.add(IntProperty('elevation', elevation));
+    properties.add(DiagnosticsProperty<TextStyle?>('style', style));
+    properties.add(ColorProperty('iconDisabledColor', iconDisabledColor));
+    properties.add(ColorProperty('iconEnabledColor', iconEnabledColor));
+    properties.add(DoubleProperty('iconSize', iconSize));
+    properties.add(DiagnosticsProperty<bool>('isDense', isDense));
+    properties.add(DiagnosticsProperty<bool>('isExpanded', isExpanded));
+    properties.add(DoubleProperty('itemHeight', itemHeight));
+    properties.add(ColorProperty('focusColor', focusColor));
+    properties.add(DiagnosticsProperty<FocusNode?>('focusNode', focusNode));
+    properties.add(DiagnosticsProperty<bool>('autofocus', autofocus));
+    properties.add(ColorProperty('dropdownColor', dropdownColor));
+    properties.add(DoubleProperty('menuMaxHeight', menuMaxHeight));
+    properties
+        .add(DiagnosticsProperty<bool?>('enableFeedback', enableFeedback));
+    properties
+        .add(DiagnosticsProperty<AlignmentGeometry>('alignment', alignment));
+    properties
+        .add(DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius));
+    properties
+        .add(DiagnosticsProperty<EdgeInsetsGeometry?>('padding', padding));
+    properties.add(EnumProperty<ZoniDropdownSize>('size', size));
+    properties.add(EnumProperty<ZoniDropdownVariant>('variant', variant));
+    properties.add(StringProperty('label', label));
+    properties.add(StringProperty('helperText', helperText));
+    properties.add(StringProperty('errorText', errorText));
+    properties.add(DiagnosticsProperty<bool>('enabled', enabled));
+    properties.add(DiagnosticsProperty<bool>('filled', filled));
+    properties.add(
+      DiagnosticsProperty<EdgeInsetsGeometry?>(
+        'contentPadding',
+        contentPadding,
+      ),
+    );
+    properties.add(DiagnosticsProperty<InputBorder?>('border', border));
+    properties
+        .add(DiagnosticsProperty<InputBorder?>('enabledBorder', enabledBorder));
+    properties
+        .add(DiagnosticsProperty<InputBorder?>('focusedBorder', focusedBorder));
+    properties
+        .add(DiagnosticsProperty<InputBorder?>('errorBorder', errorBorder));
+    properties.add(
+      DiagnosticsProperty<InputBorder?>(
+        'focusedErrorBorder',
+        focusedErrorBorder,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<InputBorder?>('disabledBorder', disabledBorder),
+    );
+    properties.add(ColorProperty('fillColor', fillColor));
+    properties.add(ColorProperty('hoverColor', hoverColor));
   }
 }
