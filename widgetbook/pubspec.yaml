@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   widgetbook: ^3.18.0
-  widgetbook_annotation: ^3.1.0
+  widgetbook_annotation: ^3.9.0
   zoni_ui:
     path: ../
 
