@@ -617,18 +617,18 @@ packages:
     dependency: "direct main"
     description:
       name: widgetbook
-      sha256: "83a58c9b4556debc7b87209a860bd5ab3daaec0786a54189aa5a3fd54bdcb6fb"
+      sha256: "50d996b09fe5094f6cbd8648628b6fbf5e35b64932afe52c6e7ebf9e2411b9cd"
       url: "https://pub.dev"
     source: hosted
-    version: "3.18.0"
+    version: "3.20.0"
   widgetbook_annotation:
     dependency: "direct main"
     description:
       name: widgetbook_annotation
-      sha256: d29eef40efac4beb51f5e9d3bb6dd800db986f7020822b06b60d27f0299dac49
+      sha256: "55504431b15eedef3c1fc4af2d108ac98b32610b59d4a4e2eea87a8515d17eef"
       url: "https://pub.dev"
     source: hosted
-    version: "3.7.0"
+    version: "3.9.0"
   widgetbook_generator:
     dependency: "direct dev"
     description:
@@ -651,7 +651,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.2.0"
+    version: "0.3.5"
 sdks:
   dart: ">=3.9.0 <4.0.0"
   flutter: ">=3.35.0"
